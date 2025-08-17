@@ -9,8 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tiptap/pm": "^3.2.0",
+    "@tiptap/starter-kit": "^3.2.0",
+    "@tiptap/vue-3": "^3.2.0",
     "element-plus": "^2.10.7",
-    "vue": "^3.4.21"
+    "pinia": "^3.0.3",
+    "pinia-plugin-persistedstate": "^4.5.0",
+    "vditor": "^3.11.1",
+    "vue": "^3.4.21",
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

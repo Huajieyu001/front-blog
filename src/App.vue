@@ -1,84 +1,54 @@
-<!-- <template>
-    <el-container class="container">
-        <el-main class="main">
-            <Header></Header>
-        </el-main>
-        <el-footer class="footer">
-            <Footer></Footer>
-        </el-footer>
-    </el-container>
-</template> -->
-
-<!-- <template>
-    <el-container>
-        <el-aside class="aside">
-            <Aside></Aside>
-            <footer class="aside-footer">Footer</footer>
-        </el-aside>
-        <el-main class="main">Main</el-main>
-    </el-container>
-</template> -->
-
 <template>
-    <div class="container">
-        <div class="layout">
-            <aside class="aside">
-                <Aside></Aside>
-            </aside>
-            <main class="main">Main</main>
-        </div>
-        <footer>
-            <Footer></Footer>
-        </footer>
-    </div>
+    <!-- <button @click="func">func</button> -->
+    <!-- <component :is="currentLayout"> -->
+        <!-- <router-view /> -->
+    <!-- </component> -->
+     <!-- <Home/> -->
+     <!-- <Elem/> -->
+    <router-view></router-view>
 </template>
 
 <script setup>
-import Header from './components/Header.vue'
+import Home from './views/Home.vue'
+import TopMenu from './components/TopMenu.vue'
+import Elem from './components/Elem.vue'
 import Main from './components/Main.vue'
 import Footer from './components/Footer.vue'
 import Aside from './components/Aside.vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import FullScreen from './components/FullScreen.vue'
+
+const route = useRoute()
+
+const layoutComponents = {
+    Home,
+    FullScreen
+}
+
+const currentLayout = computed(()=>{
+    let name = route.meta.layout
+    console.log("route.meta.layout = " + route.meta.layout)
+    return layoutComponents[name]
+})
+
+// func(()=>{
+//     console.log(currentLayout)
+// })
+
 </script>
 
 <style scoped>
-/* .aside{
-    height: 100vh;
-    border-right: solid 2px;
-    background-color: rgb(83, 41, 138);
-    min-width: 0;
-}*/
-/* .container{
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-} */
-.layout{
+.layout {
     display: flex;
     background-color: greenyellow;
+    border-radius: 24px;
 }
-/* footer{
-    background-color: aqua;
-    position: relative  ;
-    bottom: 0;
-    max-width: 100vw;
-    text-align: center;
-    border-radius: 20%;
-}  */
-/* footer {
-    text-align: center;
-    padding: 20px;
-    background: #2c3e50;
-    color: white;
-    border-radius: 10px;
-    margin-top: 20px;
-} */
 
-.aside {
-    flex: 0 0 260px;
-    background: #fff;
-    border-radius: 10px;
+aside {
+    flex: 0 0 400px;
+    background: gray;
+    border-radius: 40px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     display: flex;
@@ -87,81 +57,31 @@ import Aside from './components/Aside.vue'
     transition: all 0.3s ease;
     margin-right: 20px;
 }
+
 main {
     flex: 1;
-    background: #fff;
-    border-radius: 10px;
+    background: #dbd1c8;
+    border-radius: 40px;
     padding: 30px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     transition: transform 0.3s ease;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* .container {
-    background: yellow;
-    min-height: 100vh;
-    width: 100vw;
-    overflow: auto;
-} */
-/* 
-.aside {
-    background-color: skyblue;
-} */
-/*
-.asideOn {
-    width: 10vw;
+.router-link-active {
+    font-weight: bold;
 }
 
-.asideOff {
-    width: 0;
-} */
-/* 
-.header {
-    background-color: red;
-    width: 100%;
-    min-height: 20px;
-    top: 0;
-} */
+.router-link-exact-active {
+    color: red;
+    /* background-color: aqua; */
+    border: 0.5px solid red;
+}
 
-/* .main {
-    background: green;
-    overflow: auto;
-} */
-
-/* .footer {
-    background-color: whitesmoke;
-    bottom: 0;
-    width: 100%;
-} */
+.routerLink {
+    height: 20px;
+    width: 40px;
+    background-color: #a36363;
+    font-size: x-large;
+}
 </style>
