@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>左右分栏布局：Aside与Main区域</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            opacity: 0.9;
+        }
+        
+        .layout {
+            display: flex;
+            gap: 20px;
+            min-height: 600px;
+        }
+        
+        /* 左侧边栏样式 */
+        aside {
+            flex: 0 0 260px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        aside:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .sidebar-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-weight: 600;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .nav-links {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .nav-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-item:hover {
+            background: #f8f9fa;
+            transform: translateX(5px);
+        }
+        
+        .nav-item.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .nav-item i {
+            font-size: 1.2rem;
+            width: 25px;
+            text-align: center;
+        }
+        
+        /* 主要内容区域样式 */
+        main {
+            flex: 1;
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        main:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .content-header {
+            margin-bottom: 30px;
+        }
+        
+        .content-header h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 4px solid #3498db;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-box {
+            flex: 1;
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .stat-title {
+            opacity: 0.85;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .layout {
+                flex-direction: column;
+            }
+            
+            aside {
+                flex: 0 0 auto;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+        }
+        
+
+        
+        footer p {
+            opacity: 0.8;
+        }
+        
+        .code-info {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 30px;
+        }
+        
+        .code-info h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .code-info ul {
+            padding-left: 20px;
+        }
+        
+        .code-info li {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>左右分栏布局实现</h1>
+            <p>左侧导航栏与右侧内容区完全独立，互不干扰</p>
+        </header>
+        
+        <div class="layout">
+            <!-- 左侧边栏区域 -->
+            <aside>
+                <div class="logo">
+                    <i class="fas fa-layout"></i>
+                </div>
+                <h2 class="sidebar-title">导航菜单</h2>
+                
+                <div class="nav-links">
+                    <div class="nav-item active">
+                        <i class="fas fa-home"></i>
+                        <span>控制面板</span>
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>数据分析</span>
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-users"></i>
+                        <span>用户管理</span>
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>订单管理</span>
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-cog"></i>
+                        <span>系统设置</span>
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span>文档中心</span>
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>日程安排</span>
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-bell"></i>
+                        <span>通知中心</span>
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-question-circle"></i>
+                        <span>帮助中心</span>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- 右侧主内容区域 -->
+            <main>
+                <div class="content-header">
+                    <h2>控制面板概览</h2>
+                    <p>欢迎回来！以下是您的系统概览信息</p>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <i class="fas fa-users fa-2x"></i>
+                        <div class="stat-number">1,248</div>
+                        <div class="stat-title">活跃用户</div>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-shopping-cart fa-2x"></i>
+                        <div class="stat-number">356</div>
+                        <div class="stat-title">今日订单</div>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                        <div class="stat-number">89%</div>
+                        <div class="stat-title">完成率</div>
+                    </div>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>项目进度</h3>
+                        <p>当前的开发进度已完成85%，预计下周可上线测试版本。</p>
+                    </div>
+                    <div class="card">
+                        <h3>系统更新</h3>
+                        <p>新版系统将在下月发布，包含多项性能优化和功能改进。</p>
+                    </div>
+                    <div class="card">
+                        <h3>用户反馈</h3>
+                        <p>收集到127条用户反馈，其中85%为功能优化建议。</p>
+                    </div>
+                    <div class="card">
+                        <h3>安全监测</h3>
+                        <p>系统运行安全稳定，过去24小时无异常登录记录。</p>
+                    </div>
+                </div>
+                
+                <div class="code-info">
+                    <h3>布局实现说明</h3>
+                    <ul>
+                        <li>使用Flexbox布局实现响应式设计</li>
+                        <li>左侧<code>aside</code>设置固定宽度，右侧<code>main</code>设置flex:1占据剩余空间</li>
+                        <li>每个区域有自己的overflow处理，确保内容滚动互不影响</li>
+                        <li>添加了悬停动画效果增强用户体验</li>
+                        <li>在移动端自动切换为垂直布局</li>
+                        <li>使用独立滚动条确保两个区域内容互不干扰</li>
+                    </ul>
+                </div>
+            </main>
+        </div>
+        
+        <footer>
+            <p>© 2023 左右分栏布局实现 | 前端开发技术示例</p>
+        </footer>
+    </div>
+</body>
+</html>
