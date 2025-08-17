@@ -27,7 +27,9 @@
             </aside>
             <main class="main">Main</main>
         </div>
-        <footer>Footer</footer>
+        <footer>
+            <Footer></Footer>
+        </footer>
     </div>
 </template>
 
@@ -56,14 +58,22 @@ import Aside from './components/Aside.vue'
     display: flex;
     background-color: greenyellow;
 }
-footer{
+/* footer{
     background-color: aqua;
-    position: fixed;
+    position: relative  ;
     bottom: 0;
-    width: 100vw;
+    max-width: 100vw;
     text-align: center;
     border-radius: 20%;
-} 
+}  */
+/* footer {
+    text-align: center;
+    padding: 20px;
+    background: #2c3e50;
+    color: white;
+    border-radius: 10px;
+    margin-top: 20px;
+} */
 
 .aside {
     flex: 0 0 260px;

@@ -9,11 +9,12 @@
 <script setup></script>
 
 <style>
-.footer {
-    font-size: 14px;
-    color: #999;
+footer {
     text-align: center;
-    background: #fff;
+    padding: 20px;
+    background: #4789cc;
+    color: white;
+    border-radius: 10px;
+    margin-top: 20px;
 }
-
 </style>
