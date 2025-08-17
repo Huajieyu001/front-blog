@@ -1,0 +1,2 @@
+# front-blog
+my blog
