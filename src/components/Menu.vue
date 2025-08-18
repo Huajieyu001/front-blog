@@ -1,23 +1,25 @@
 <template>
     <div class="menu">
-        <div v-for="(item) in menuStore.menuList" :key="item.id" class="nav-item" :class="{active: item.isActive}" @click="selectMenu(item.id, item.isActive)">{{ item.menuName }}</div>
+        <div v-for="(item) in menuStore.menus" :key="item.id" class="nav-item" :class="{active: item.id == selectedMenuId}" @click="selectMenu(item.id, item.isActive)">{{ item.name }}</div>
     </div>
 </template>
 <script setup>
-import { reactive } from 'vue';
+import { reactive, onMounted, ref } from 'vue';
 import { useMenuStore } from '../store/menuStore';
 import { useRouter } from 'vue-router';
 import { useHomeStore } from '../store/homeStore';
+import http from '../axios/menuAxios';
 
 const homeStore = useHomeStore()
 const menuStore = useMenuStore()
 const router = useRouter()
+const selectedMenuId = ref(1)
 
 function selectMenu(categoryId, isActive){
     if(isActive){
         return
     }
-    menuStore.menuList.forEach((e)=>{
+    menuStore.menus.forEach((e)=>{
         if(e.id == categoryId){
             e.isActive = true;
         } else {
@@ -27,6 +29,21 @@ function selectMenu(categoryId, isActive){
     router.push('/article')
     console.log("router.push('/article')")
 }
+
+const fetchMenus = async ()=>{
+    try{
+        const data = await http.get('/title/list')
+        menuStore.menus = data.data
+        console.log(data)
+    }
+    catch(ex){
+        console.log(ex)
+    }
+}
+
+onMounted(()=>{
+    fetchMenus()
+})
 </script>
 <style>
 
