@@ -21,6 +21,7 @@
 </template>
 
 <script setup>
+import { onMounted, reactive } from 'vue'
 import Main from '../components/Main.vue'
 import Footer from '../components/Footer.vue'
 import Aside from '../components/Aside.vue'

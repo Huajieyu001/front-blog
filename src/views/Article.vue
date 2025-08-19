@@ -28,14 +28,16 @@ import Vditor from 'vditor';
 import 'vditor/dist/index.css'
 import { useArticleStore } from '../store/articleStore';
 import Pad from '../components/Pad.vue';
+import { apiArticleAdd } from '../axios/articleAxios';
 
 const articleStore = useArticleStore()
 const showPad = ref(false)
 const message = ref('')
 
 function publish(){
-    message.value = '确定要提交吗'
-    showPad.value = true
+    apiArticleAdd(articleStore)
+    articleStore.$reset()
+    location.reload();
 }
 
 function save(){
@@ -113,12 +115,11 @@ onMounted(() => {
       enable: false // 禁用本地缓存，您可以用自己的方式保存
     },
     input(value) {
-      content.value = value
-      articleStore.article = value
+      articleStore.content = value
     },
     after() {
       // 初始化内容
-      editor.value.setValue(articleStore.article)
+      editor.value.setValue(articleStore.content)
     }
   })
 })

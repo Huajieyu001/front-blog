@@ -8,7 +8,7 @@ import { reactive, onMounted, ref } from 'vue';
 import { useMenuStore } from '../store/menuStore';
 import { useRouter } from 'vue-router';
 import { useHomeStore } from '../store/homeStore';
-import http from '../axios/menuAxios';
+import http from '../axios/httpUtils';
 
 const homeStore = useHomeStore()
 const menuStore = useMenuStore()
@@ -32,7 +32,7 @@ function selectMenu(categoryId, isActive){
 
 const fetchMenus = async ()=>{
     try{
-        const data = await http.get('/title/list')
+        const data = await http.get('/title/list').then(res => res, err => err)
         menuStore.menus = data.data
         console.log(data)
     }
