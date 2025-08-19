@@ -3,9 +3,9 @@ import { defineStore } from "pinia";
 export const useArticleStore = defineStore("articleStore", {
     state: () => {
         return {
-            title: "",
-            summary: "",
-            article: "",
+            title: '',
+            summary: '',
+            content: ''
         };
     },
     persist: true
