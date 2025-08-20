@@ -10,11 +10,6 @@
 
 <script setup>
 import Home from './views/Home.vue'
-import TopMenu from './components/TopMenu.vue'
-import Elem from './components/Elem.vue'
-import Main from './components/Main.vue'
-import Footer from './components/Footer.vue'
-import Aside from './components/Aside.vue'
 import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import FullScreen from './components/FullScreen.vue'

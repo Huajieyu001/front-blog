@@ -11,16 +11,16 @@
     
 .elem{
     padding: 10px;
-    background-color: rgb(126, 233, 201);
-    border-radius: 5px;
-    border: solid, 0.5px;
-    margin-top: 24px;
+    background:#FFFFFF;
+    /* border-radius: 5px; */
+    border: solid, 0.5px skyblue;
+    margin-bottom: 28px;
     min-height: 40px;
 }
 
 .elem:hover{
-    background: #61cad8;
-    transform: translateX(10px); 
-    transform: translateY(10px); 
+    background:#dddc9b;
+    transform: translateX(-5px);
+    color: #2796e0
 }
 </style>

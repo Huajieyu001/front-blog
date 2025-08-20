@@ -1,6 +1,6 @@
 <template>
-    <Summary v-if="articleItemList.data && articleItemList.data.length > 0"
-            v-for="item in articleItemList.data" 
+    <Summary v-if="article.records && article.records.length > 0"
+            v-for="item in article.records" 
             :key="item"
             @click="readArticle(item.id)">
         <template v-slot:title>
@@ -10,31 +10,49 @@
             摘要：{{ item.summary }}
         </template>
     </Summary>
-    <Pager></Pager>
+    <el-pagination
+    :page-size="pageSize"
+    :pager-count="7"
+    layout="prev, pager, next, jumper, ->"
+    :total="article.total"
+    v-model:current-page="pageNum"
+    :background="back"
+    class="pageHelper"
+  />
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, watchEffect } from 'vue';
 import Content from './Content.vue'
 import Summary from './Summary.vue'
 import Pager from './Pager.vue';
 import { apiArticleList } from '../axios/articleAxios'
 import { useRouter } from 'vue-router';
 
+const pageNum = ref(1)
+const pageSize = ref(10)
+const back = ref(true)
+
+
+
 const router = useRouter()
-const articleItemList = reactive({
-    data:[]
+const articleItemList = reactive([])
+
+const article = reactive({
+    total: 0,
+    records: []
 })
 
-const initList = async()=>{
-    const data = await apiArticleList(1, 10)
-    console.log("@@@@", data.data.list)
-    articleItemList.data = data.data.list
-}
 onMounted(()=>{
-    const data = initList()
-    console.log(data)
+    initList(1, 10)
 })
+
+const initList = async(pageNum, pageSize)=>{
+    const data = await apiArticleList(pageNum, pageSize)
+    console.log("@@@@", data)
+    Object.assign(article, {...data})
+}
+
 const readArticle = (id)=>{
     router.push({
         name: 'ArticleDetail',
@@ -42,6 +60,14 @@ const readArticle = (id)=>{
             id: id
         }
     })
+}
+
+watchEffect(()=>{
+    initList(pageNum.value, pageSize.value)
+})
+
+const updateList = ()=>{
+
 }
 
 </script>

@@ -34,28 +34,30 @@ const homeStore = useHomeStore()
 <style scoped>
 .layout{
     display: flex;
-    background-color: greenyellow;
-    border-radius: 24px;
+    background-color: #fef9f4;
+    /* border-radius: 24px;  */
+    border: solid 0.5px skyblue;
 }
 
 aside {
     flex: 0 0 400px;
     background: gray;
-    border-radius: 40px;
-    padding: 20px;
+    /* border-radius: 40px; */
+    /* padding: 20px; */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
     overflow: hidden;
     transition: all 0.3s ease;
-    margin-right: 20px;
+    height: 100%;
+    /* margin-right: 20px; */
 }
 main {
     flex: 1;
-    background: #dbd1c8;
-    border-radius: 40px;
+    background: #fef9f4;
     padding: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); */
+    /* border-top-right-radius: 24px; */
     overflow: hidden;
     transition: transform 0.3s ease;
 }

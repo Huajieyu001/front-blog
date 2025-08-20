@@ -20,7 +20,7 @@ const apiArticleList = async (pageNum, pageSize) => {
             }
         });
 
-        return data;
+        return data.data;
     } catch (ex) {
         console.log(ex);
     }

@@ -12,8 +12,8 @@
 footer {
     text-align: center;
     padding: 20px;
-    background: #4789cc;
-    color: white;
+    /* background: #FFFFFF; */
+    color: gray;
     border-radius: 10px;
     margin-top: 20px;
 }
