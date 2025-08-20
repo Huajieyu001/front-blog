@@ -26,9 +26,22 @@ import Main from '../components/Main.vue'
 import Footer from '../components/Footer.vue'
 import Aside from '../components/Aside.vue'
 import { useHomeStore } from '../store/homeStore'
+import { useMenuStore } from '../store/menuStore'
+import { getMenus } from '../axios/menuAxios'
 
 const homeStore = useHomeStore()
+const menuStore = useMenuStore()
 
+const initMenu = async ()=>{
+    const data = await getMenus()
+    menuStore.menus = data
+    console.log("@@@@@@@", data)
+    menuStore.currentMenuId = data[0].id
+}
+
+onMounted(()=>{
+    initMenu()
+})
 </script>
 
 <style scoped>

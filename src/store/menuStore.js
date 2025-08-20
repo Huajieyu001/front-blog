@@ -3,7 +3,8 @@ import { defineStore } from "pinia";
 export const useMenuStore = defineStore('menuStore', {
     state: ()=>(
         {
-            menus: []
+            menus: [],
+            currentMenuId: 0
         }
     )
 })

@@ -1,6 +1,9 @@
 <template>
     <div class="menu">
-        <div v-for="(item) in menuStore.menus" :key="item.id" class="nav-item" :class="{active: item.id == selectedMenuId}" @click="selectMenu(item.id, item.isActive)">{{ item.name }}</div>
+        <div v-for="(item) in menuStore.menus"
+        :key="item.id" class="nav-item"
+        :class="{active: item.id == menuStore.currentMenuId}"
+        @click="selectMenu(item.id, item.isActive)">{{ item.name }}</div>
     </div>
 </template>
 <script setup>
@@ -15,35 +18,9 @@ const menuStore = useMenuStore()
 const router = useRouter()
 const selectedMenuId = ref(1)
 
-function selectMenu(categoryId, isActive){
-    if(isActive){
-        return
-    }
-    menuStore.menus.forEach((e)=>{
-        if(e.id == categoryId){
-            e.isActive = true;
-        } else {
-            e.isActive = false
-        }
-    })
-    router.push('/article')
-    console.log("router.push('/article')")
+function selectMenu(categoryId){
+    menuStore.currentMenuId = categoryId
 }
-
-const fetchMenus = async ()=>{
-    try{
-        const data = await http.get('/title/list').then(res => res, err => err)
-        menuStore.menus = data.data
-        console.log(data)
-    }
-    catch(ex){
-        console.log(ex)
-    }
-}
-
-onMounted(()=>{
-    fetchMenus()
-})
 </script>
 <style>
 

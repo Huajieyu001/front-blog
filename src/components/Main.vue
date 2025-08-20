@@ -28,10 +28,12 @@ import Summary from './Summary.vue'
 import Pager from './Pager.vue';
 import { apiArticleList } from '../axios/articleAxios'
 import { useRouter } from 'vue-router';
+import { useMenuStore } from '../store/menuStore';
 
 const pageNum = ref(1)
 const pageSize = ref(10)
 const back = ref(true)
+const menuStore = useMenuStore()
 
 
 
@@ -48,7 +50,9 @@ onMounted(()=>{
 })
 
 const initList = async(pageNum, pageSize)=>{
-    const data = await apiArticleList(pageNum, pageSize)
+    console.log('pageNum', pageNum)
+    console.log('pageSize', pageSize)
+    const data = await apiArticleList(menuStore.currentMenuId, pageNum, pageSize)
     console.log("@@@@", data)
     Object.assign(article, {...data})
 }
@@ -65,10 +69,6 @@ const readArticle = (id)=>{
 watchEffect(()=>{
     initList(pageNum.value, pageSize.value)
 })
-
-const updateList = ()=>{
-
-}
 
 </script>
 
