@@ -7,7 +7,9 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs } from 'vue'
+import { reactive, toRefs, ref } from 'vue'
+
+const size = ref(100)
 
 const state = reactive({
     circleUrl:

@@ -11,16 +11,17 @@ const apiArticleAdd = async (obj) => {
         );
 };
 
-const apiArticleList = async (pageNum, pageSize) => {
+const apiArticleList = async (menuId, pageNum, pageSize) => {
     try {
         const data = await http.get("/article/list", {
             params: {
+                menuId,
                 pageNum,
                 pageSize,
             }
         });
 
-        return data;
+        return data.data;
     } catch (ex) {
         console.log(ex);
     }
