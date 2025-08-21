@@ -2,7 +2,7 @@
     <div class="profile">
         <el-avatar :size="size" :src="circleUrl" @click="toManage()" />
         <br></br>
-        <span>sddfs</span>
+        <!-- <span>sddfs</span> -->
     </div>
 </template>
 

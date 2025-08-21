@@ -4,7 +4,6 @@
     <!-- 使用 ul 和 li 创建菜单项 -->
     <ul class="menu-list">
       <li v-for="(item, index) in menuItems" :key="index" class="menu-item">
-        <!-- <a :href="item.link" class="menu-link">{{ item.label }}</a> -->
         <div @click="toTopMenu(item.link)" class="menu-link">{{ item.label }}</div>
       </li>
     </ul>
@@ -19,12 +18,9 @@ const router = useRouter()
 
 // 菜单项数据
 const menuItems = ref([
-  { label: '我的文章', link: '/' },
-  { label: '博客推荐', link: '/blogRed' },
-  { label: '网站推荐', link: '/webRed' },
-  { label: '工具推荐', link: '/toolRed' },
-  { label: '开发问题合集', link: '/problemRed' },
-  { label: '其他', link: '/other' },
+  { label: '文章管理', link: '/articleManage' },
+  { label: '菜单管理', link: '/menuManage' },
+  { label: '信息管理', link: '/infoManage' },
 ]);
 
 const toTopMenu = (path) => {
