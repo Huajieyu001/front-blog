@@ -14,7 +14,7 @@
     background:#FFFFFF;
     /* border-radius: 5px; */
     border: solid, 0.5px skyblue;
-    margin-bottom: 28px;
+    margin: 20px;
     min-height: 40px;
 }
 

@@ -3,6 +3,8 @@ import Home from "../views/Home.vue";
 import Article from "../views/Article.vue";
 import Hello from "../views/Hello.vue";
 import ArticleDetail from "../components/ArticleDetail.vue";
+import component from "element-plus/es/components/tree-select/src/tree-select-option.mjs";
+import Manage from "../components/Manage.vue";
 
 const routes = [
     {
@@ -23,6 +25,11 @@ const routes = [
         path: '/hello',
         name: 'Hello',
         component: Hello
+    },
+    {
+        path: '/manage',
+        name: 'Manage',
+        component: Manage
     }
 ]
 

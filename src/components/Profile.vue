@@ -1,6 +1,6 @@
 <template>
     <div class="profile">
-        <el-avatar :size="size" :src="circleUrl" />
+        <el-avatar :size="size" :src="circleUrl" @click="toManage()" />
         <br></br>
         <span>sddfs</span>
     </div>
@@ -8,6 +8,9 @@
 
 <script lang="ts" setup>
 import { reactive, toRefs, ref } from 'vue'
+import {useRouter} from 'vue-router'
+
+const router = useRouter()
 
 const size = ref(100)
 
@@ -20,6 +23,14 @@ const state = reactive({
 })
 
 const { circleUrl, squareUrl, sizeList } = toRefs(state)
+
+const toManage = ()=>{
+    router.push({
+        name: "Manage"
+    })
+}
+
+
 </script>
 
 <style scoped>

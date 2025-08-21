@@ -1,7 +1,6 @@
 <template>
     <div class="aside">
         <Profile></Profile>
-        <Operation></Operation>
         <Menu></Menu>
         <!-- <div v-for="(item) in categories" :key="item.id" class="nav-item" :class="{active: item.isActive}" @click="selectMenu(item.id, item.isActive)">{{ item.menuName }}</div> -->
     </div>

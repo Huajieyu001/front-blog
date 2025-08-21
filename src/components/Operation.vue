@@ -1,63 +1,37 @@
 <template>
-  <el-row>
-    <el-col :span="24">
-      <div class="grid-content ep-bg-purple-dark" />
-    </el-col>
-  </el-row>
-  <el-row>
-    <el-col :span="12">
-      <div class="grid-content ep-bg-purple" />
-    </el-col>
-    <el-col :span="12">
-      <div class="grid-content ep-bg-purple-light" />
-    </el-col>
-  </el-row>
-  <el-row>
-    <el-col :span="8">
-      <div class="grid-content ep-bg-purple" />
-    </el-col>
-    <el-col :span="8">
-      <div class="grid-content ep-bg-purple-light" />
-    </el-col>
-    <el-col :span="8">
-      <div class="grid-content ep-bg-purple" />
-    </el-col>
-  </el-row>
-  <el-row>
-    <el-col :span="6">
-      <div class="grid-content ep-bg-purple" />
-    </el-col>
-    <el-col :span="6">
-      <div class="grid-content ep-bg-purple-light" />
-    </el-col>
-    <el-col :span="6">
-      <div class="grid-content ep-bg-purple" />
-    </el-col>
-    <el-col :span="6">
-      <div class="grid-content ep-bg-purple-light" />
-    </el-col>
-  </el-row>
-  <el-row>
-    <el-col :span="4">
-      <div class="grid-content ep-bg-purple" />
-    </el-col>
-    <el-col :span="4">
-      <div class="grid-content ep-bg-purple-light" />
-    </el-col>
-    <el-col :span="4">
-      <div class="grid-content ep-bg-purple" />
-    </el-col>
-    <el-col :span="4">
-      <div class="grid-content ep-bg-purple-light" />
-    </el-col>
-    <el-col :span="4">
-      <div class="grid-content ep-bg-purple" />
-    </el-col>
-    <el-col :span="4">
-      <div class="grid-content ep-bg-purple-light" />
-    </el-col>
-  </el-row>
+    <div class="mb-4">
+    <el-button
+      v-for="button in buttons"
+      :key="button.text"
+      :type="button.type"
+      :color="button.color"
+      @click="toWriteArticle"
+    >
+      {{ button.text }}
+    </el-button>
+  </div>
 </template>
+
+<script setup>
+import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+const buttons = reactive([
+  {
+    text: "去写文章",
+    type: "info",
+    color: "#A3A6AD"
+  }
+])
+
+const toWriteArticle = ()=>{
+  router.push({
+    name: "Article"
+  })
+}
+
+</script>
 
 <style>
 .el-row {

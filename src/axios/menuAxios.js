@@ -2,7 +2,7 @@ import http from '../axios/httpUtils'
 
 const getMenus = async ()=>{
     try{
-        const data = await http.get('/title/list').then(res => res, err => err)
+        const data = await http.get('/menu/list').then(res => res, err => err)
         return data.data
     }
     catch(ex){

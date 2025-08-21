@@ -1,4 +1,5 @@
 <template>
+    <Operation></Operation>
     <Summary v-if="article.records && article.records.length > 0"
             v-for="item in article.records" 
             :key="item"
@@ -10,6 +11,7 @@
             摘要：{{ item.summary }}
         </template>
     </Summary>
+    <div class="alert">共有{{ article.records.length }}条记录</div>
     <el-pagination
     :page-size="pageSize"
     :pager-count="7"
@@ -75,5 +77,10 @@ watchEffect(()=>{
 <style scoped>
 .article-list-title{
     font-weight: 800;
+}
+
+.alert{
+    margin-top: 100px;
+    font-size: large;
 }
 </style>

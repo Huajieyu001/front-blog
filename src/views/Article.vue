@@ -10,12 +10,36 @@
         <el-button @click="save">Save as Draft</el-button>
         <el-button @click="clear">Clear</el-button>
     </el-button-group>
-    <div class="title">Title<br></br>
-        <input type="text" placeholder="请输入标题" class="title" v-model="articleStore.title"/>
+    <hr></hr>
+    <SelectMenu></SelectMenu>
+    <div style="margin-top: 10px;">
+        <div style="font-weight: bold;">标题</div>
+        <el-input
+            v-model="articleStore.title"
+            style="width: 60vw"
+            :rows="2"
+            type="textarea"
+            placeholder="请输入标题"
+            autosize
+            maxlength="50"
+            show-word-limit="true"
+            input-style="font-size:large; font-weight:bold;"
+        />
     </div>
-    <div class="summary">Summary<br></br>
-        <input type="textarea" placeholder="请输入摘要" class="summary" v-model="articleStore.summary"/>
+    <div  style="margin-top: 10px;">
+        <div style="font-weight: bold;">概述</div>
+        <el-input
+            v-model="articleStore.summary"
+            style="width: 60vw"
+            :rows="2"
+            type="textarea"
+            placeholder="请输入概述"
+            autosize
+            maxlength="200"
+            show-word-limit="true"
+        />
     </div>
+    <br></br>
     <br></br>
     <div class="editor-container">
         <div id="vditor" class="vditor-wrapper">
@@ -28,16 +52,19 @@ import Vditor from 'vditor';
 import 'vditor/dist/index.css'
 import { useArticleStore } from '../store/articleStore';
 import Pad from '../components/Pad.vue';
+import SelectMenu from '../components/SelectMenu.vue';
 import { apiArticleAdd } from '../axios/articleAxios';
+import { useMenuStore } from '../store/menuStore';
 
 const articleStore = useArticleStore()
 const showPad = ref(false)
 const message = ref('')
+const menuStore = useMenuStore()
 
 function publish(){
     apiArticleAdd(articleStore)
     articleStore.$reset()
-    location.reload();
+    // location.reload();
 }
 
 function save(){
@@ -127,10 +154,10 @@ onMounted(() => {
 </script>
 <style>
 .title{
-    font-size: xx-large;
+    font-size:large;
 }
-.summary{
+/* .summary{
     font-size: large;
-}
+} */
 
 </style>

@@ -1,4 +1,5 @@
 <template>
+    <TopMenu></TopMenu>
     <div class="container">
         <div class="layout">
             <el-splitter>
@@ -28,6 +29,7 @@ import Aside from '../components/Aside.vue'
 import { useHomeStore } from '../store/homeStore'
 import { useMenuStore } from '../store/menuStore'
 import { getMenus } from '../axios/menuAxios'
+import TopMenu from '../components/TopMenu.vue'
 
 const homeStore = useHomeStore()
 const menuStore = useMenuStore()
@@ -45,6 +47,10 @@ onMounted(()=>{
 </script>
 
 <style scoped>
+.container{
+    margin-top: 30px;
+}
+
 .layout{
     display: flex;
     background-color: #fef9f4;
