@@ -1,6 +1,7 @@
 <template>
     <div class="profile">
-        <el-avatar :size="size" :src="circleUrl" @click="toManage()" />
+        <!-- <el-avatar :size="size" :src="circleUrl" @click="toManage()" /> -->
+        <el-avatar :size="size" :src="circleUrl"/>
         <br></br>
         <!-- <span>sddfs</span> -->
     </div>
@@ -24,6 +25,10 @@ const toManage = ()=>{
     router.push({
         name: "Manage"
     })
+}
+
+const toGithub = ()=>{
+    window.open("https://github.com/Huajieyu001")
 }
 
 

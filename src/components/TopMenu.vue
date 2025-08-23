@@ -19,12 +19,20 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 // 菜单项数据
+// const menuItems = ref([
+//   { label: '我的文章', link: '/' },
+//   // { label: '博客推荐', link: '/blogRed' },
+//   { label: '网站推荐', link: '/webRed' },
+//   { label: '工具推荐', link: '/toolRed' },
+//   { label: '其他', link: '/other' },
+// ]);
+
 const menuItems = ref([
   { label: '我的文章', link: '/' },
   // { label: '博客推荐', link: '/blogRed' },
-  { label: '网站推荐', link: '/webRed' },
-  { label: '工具推荐', link: '/toolRed' },
-  { label: '其他', link: '/other' },
+  { label: '网站推荐', link: '/' },
+  { label: '工具推荐', link: '/' },
+  { label: '其他', link: '/' },
 ]);
 
 const currentLabel = ref('我的文章')

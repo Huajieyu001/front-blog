@@ -1,5 +1,5 @@
 <template>
-    <Operation></Operation>
+    <!-- <Operation></Operation> -->
     <Summary v-if="article.records && article.records.length > 0"
             v-for="item in article.records" 
             :key="item"
@@ -13,14 +13,15 @@
     </Summary>
     <div class="record left-distance">共有{{ article.total }}条记录</div>
     <el-pagination
-    :page-size="pageSize"
-    :pager-count="7"
-    layout="prev, pager, next, jumper, ->"
-    :total="article.total"
-    v-model:current-page="pageNum"
-    :background="back"
-    class="pageHelper left-distance"
-  />
+        :page-size="pageSize"
+        :pager-count="7"
+        layout="prev, pager, next, jumper, ->"
+        :total="article.total"
+        v-model:current-page="pageNum"
+        :background="back"
+        class="pageHelper left-distance"
+    />
+        
 </template>
 
 <script setup>

@@ -1,5 +1,5 @@
 <template>
-    <TopMenu></TopMenu>
+    <!-- <TopMenu></TopMenu> -->
     <div class="container">
         <div class="layout">
             <el-splitter>

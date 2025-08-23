@@ -200,6 +200,91 @@ onMounted(() => {
     after() {
       // 初始化内容
       editor.value.setValue(articleStore.content)
+    },
+    upload: {
+        accept: 'image/*',
+        multiple: true,
+        handler: (files) => {
+            if (!files || files.length === 0) {
+                return;
+            }
+            
+            const uploadPromises = [];
+            
+            Array.from(files).forEach(file => {
+                const statusId = Date.now() + Math.random();
+                const status = {
+                    id: statusId,
+                    filename: file.name,
+                    status: 'uploading',
+                    progress: 0,
+                    message: '准备上传...'
+                };
+                
+                uploadStatus.value.unshift(status);
+                
+                // 模拟上传过程
+                const totalSize = file.size;
+                let uploadedSize = 0;
+                
+                // 创建模拟进度更新
+                const progressInterval = setInterval(() => {
+                    if (uploadedSize < totalSize) {
+                        uploadedSize += totalSize / 10;
+                        const progress = Math.min(100, (uploadedSize / totalSize) * 100);
+                        
+                        const index = uploadStatus.value.findIndex(s => s.id === statusId);
+                        if (index !== -1) {
+                            uploadStatus.value[index].progress = progress;
+                            uploadStatus.value[index].message = `上传中... ${Math.round(progress)}%`;
+                        }
+                    } else {
+                        clearInterval(progressInterval);
+                    }
+                }, 300);
+                
+                // 模拟上传请求
+                const promise = new Promise((resolve) => {
+                    setTimeout(() => {
+                        clearInterval(progressInterval);
+                        
+                        // 模拟90%的成功率
+                        if (Math.random() > 0.1) {
+                            const index = uploadStatus.value.findIndex(s => s.id === statusId);
+                            if (index !== -1) {
+                                uploadStatus.value[index].status = 'success';
+                                uploadStatus.value[index].progress = 100;
+                                uploadStatus.value[index].message = '上传成功';
+                                uploadStatus.value[index].url = `https://example.com/images/${file.name}`;
+                                
+                                // 添加到已上传图片列表
+                                uploadedImages.value.unshift({
+                                    filename: file.name,
+                                    url: `https://example.com/images/${file.name}`,
+                                    size: file.size
+                                });
+                            }
+                            
+                            resolve(`https://example.com/images/${file.name}`);
+                        } else {
+                            const index = uploadStatus.value.findIndex(s => s.id === statusId);
+                            if (index !== -1) {
+                                uploadStatus.value[index].status = 'error';
+                                uploadStatus.value[index].message = '上传失败: 服务器错误';
+                            }
+                            resolve(null);
+                        }
+                    }, 2000);
+                });
+                
+                uploadPromises.push(promise);
+            });
+            
+            return Promise.all(uploadPromises).then(urls => {
+                return urls.filter(url => url !== null);
+            });
+        }
+
     }
   })
 })
