@@ -25,10 +25,10 @@ function selectMenu(categoryId){
 <style>
 
 .menu {
-    border: #87c48c solid;
+    border: #87c48c solid 0.5px;
     padding: 10px;
     margin: 10px;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     background-color: rgb(216, 228, 224);
 } 
 

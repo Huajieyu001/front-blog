@@ -3,13 +3,19 @@ import Home from "../views/Home.vue";
 import Article from "../views/Article.vue";
 import Hello from "../views/Hello.vue";
 import ArticleDetail from "../components/ArticleDetail.vue";
-import component from "element-plus/es/components/tree-select/src/tree-select-option.mjs";
 import Manage from "../components/Manage.vue";
+import Publish from "../components/Publish.vue";
+import WebRed from "../views/WebRed.vue";
 
 const routes = [
     {
         path: '/',
         component: Home,
+    },
+    {
+        path: '/webRed',
+        name: 'WebRed',
+        component: WebRed,
     },
     {
         path: '/article',
@@ -30,6 +36,11 @@ const routes = [
         path: '/manage',
         name: 'Manage',
         component: Manage
+    },
+    {
+        path: '/publish',
+        name: 'Publish',
+        component: Publish
     }
 ]
 

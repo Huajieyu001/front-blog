@@ -10,6 +10,10 @@
     <div class="md-body">
       <div class="markdown-body" v-html="data.content"></div>
     </div>
+    <div style="margin-top: 20px">
+      本文章由{{ data.createBy }}发布于{{ data.createTime }}
+      <div v-if="data.updateTime">最后更新于{{ data.updateTime }}</div>
+    </div>
 </template>
 
 <script setup>
@@ -24,7 +28,11 @@ const route = useRoute()
 const data = reactive({
   title: '',
   summary: '',
-  content: ''
+  content: '',
+  createBy: '',
+  createTime: '',
+  updateBy: '',
+  updateTime: ''
 })
 
 const initArticle = async ()=>{

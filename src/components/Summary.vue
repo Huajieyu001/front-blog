@@ -16,6 +16,7 @@
     border: solid, 0.5px skyblue;
     margin: 20px;
     min-height: 40px;
+    font-family: Arimo, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .elem:hover{

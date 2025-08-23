@@ -15,11 +15,7 @@ const router = useRouter()
 const size = ref(100)
 
 const state = reactive({
-    circleUrl:
-        'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-    squareUrl:
-        'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
-    sizeList: ['small', '', 'large'] as const,
+    circleUrl: 'https://ts1.tc.mm.bing.net/th/id/OIP-C.7GLMYPqMlt2LgkbPsOnDIAAAAA?w=207&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2'
 })
 
 const { circleUrl, squareUrl, sizeList } = toRefs(state)
@@ -35,8 +31,9 @@ const toManage = ()=>{
 
 <style scoped>
 .profile{
-    border: solid 1px;
-    border-radius: 20px;
+    border: #87c48c solid 0.5px;
+    /* border: solid 1px; */
+    /* border-radius: 20px; */
     padding: 10px;
     margin: 10px;
 }

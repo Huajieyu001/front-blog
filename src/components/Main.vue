@@ -8,10 +8,10 @@
             <div class="article-list-title">标题：{{ item.title }}</div>
         </template>
         <template v-slot:summary>
-            摘要：{{ item.summary }}
+            概述：{{ item.summary }}
         </template>
     </Summary>
-    <div class="alert">共有{{ article.records.length }}条记录</div>
+    <div class="record left-distance">共有{{ article.total }}条记录</div>
     <el-pagination
     :page-size="pageSize"
     :pager-count="7"
@@ -19,15 +19,13 @@
     :total="article.total"
     v-model:current-page="pageNum"
     :background="back"
-    class="pageHelper"
+    class="pageHelper left-distance"
   />
 </template>
 
 <script setup>
 import { ref, onMounted, reactive, watchEffect } from 'vue';
-import Content from './Content.vue'
 import Summary from './Summary.vue'
-import Pager from './Pager.vue';
 import { apiArticleList } from '../axios/articleAxios'
 import { useRouter } from 'vue-router';
 import { useMenuStore } from '../store/menuStore';
@@ -37,10 +35,7 @@ const pageSize = ref(10)
 const back = ref(true)
 const menuStore = useMenuStore()
 
-
-
 const router = useRouter()
-const articleItemList = reactive([])
 
 const article = reactive({
     total: 0,
@@ -52,10 +47,7 @@ onMounted(()=>{
 })
 
 const initList = async(pageNum, pageSize)=>{
-    console.log('pageNum', pageNum)
-    console.log('pageSize', pageSize)
     const data = await apiArticleList(menuStore.currentMenuId, pageNum, pageSize)
-    console.log("@@@@", data)
     Object.assign(article, {...data})
 }
 
@@ -79,8 +71,12 @@ watchEffect(()=>{
     font-weight: 800;
 }
 
-.alert{
-    margin-top: 100px;
+.record{
+    margin-top: 50px;
     font-size: large;
+}
+
+.left-distance{
+    margin-left: 20px;
 }
 </style>

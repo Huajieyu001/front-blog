@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-4">
+  <div class="mb-4">
     <el-button
       v-for="button in buttons"
       :key="button.text"
@@ -21,7 +21,7 @@ const buttons = reactive([
   {
     text: "去写文章",
     type: "info",
-    color: "#A3A6AD"
+    color: "skyblue"
   }
 ])
 
@@ -34,6 +34,11 @@ const toWriteArticle = ()=>{
 </script>
 
 <style>
+.mb-4{
+  margin-left: 20px;
+}
+
+
 .el-row {
   margin-bottom: 20px;
 }

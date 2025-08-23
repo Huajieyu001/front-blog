@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useArticleStore = defineStore("articleStore", {
+const useArticleStore = defineStore("articleStore", {
     state: () => {
         return {
             menuId: null,
@@ -9,5 +9,19 @@ export const useArticleStore = defineStore("articleStore", {
             content: ''
         };
     },
-    persist: true
+    // 持久化设置为session级别
+    persist: {
+        storage: sessionStorage,
+        key: 'huajieyu_blog_article'
+    }
 });
+
+const clearArticleStore = ()=>{
+    const articleStore = useArticleStore()
+    articleStore.title= ''
+    articleStore.summary= ''
+    articleStore.content= ''
+    console.log("+++", articleStore)
+}
+
+export { useArticleStore, clearArticleStore}

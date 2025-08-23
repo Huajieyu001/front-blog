@@ -13,7 +13,9 @@ import Menu from './Menu.vue';
 </script>
 <style>
 .aside{
-    background-color: rgb(15, 35, 43);
+    /* background-color: rgb(15, 35, 43); */
+    /* background-color: rgb(162, 218, 241); */
+    background-color: rgb(235, 238, 201);
     /* padding: 10px; */
     height: 100%;
 }

@@ -3,7 +3,7 @@
     <div class="container">
         <div class="layout">
             <el-splitter>
-                <el-splitter-panel :size="200" :max="200" :min="10">
+                <el-splitter-panel class="aside-panel" :size="150" :max="150">
                     <aside>
                         <Aside></Aside>
                     </aside>
@@ -47,6 +47,11 @@ onMounted(()=>{
 </script>
 
 <style scoped>
+
+/* .aside-panel{
+    max-width: 20vw;
+} */
+
 .container{
     margin-top: 30px;
 }
