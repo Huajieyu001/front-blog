@@ -1,8 +1,9 @@
 <template>
+    <!-- <TopMenu></TopMenu> -->
     <div class="container">
         <div class="layout">
             <el-splitter>
-                <el-splitter-panel :size="200" :max="200" :min="10">
+                <el-splitter-panel class="aside-panel" :size="150" :max="150">
                     <aside>
                         <Aside></Aside>
                     </aside>
@@ -28,6 +29,7 @@ import Aside from '../components/Aside.vue'
 import { useHomeStore } from '../store/homeStore'
 import { useMenuStore } from '../store/menuStore'
 import { getMenus } from '../axios/menuAxios'
+import TopMenu from '../components/TopMenu.vue'
 
 const homeStore = useHomeStore()
 const menuStore = useMenuStore()
@@ -45,6 +47,15 @@ onMounted(()=>{
 </script>
 
 <style scoped>
+
+/* .aside-panel{
+    max-width: 20vw;
+} */
+
+.container{
+    margin-top: 30px;
+}
+
 .layout{
     display: flex;
     background-color: #fef9f4;

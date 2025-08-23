@@ -7,7 +7,7 @@ const http = axios.create({
 })
 
 http.interceptors.request.use(config => {
-    const token = localStorage.getItem('blog_auth')
+    const token = localStorage.getItem('huajieyu_blog_auth')
     if(token) {
         config.headers.Authorization = token
     }

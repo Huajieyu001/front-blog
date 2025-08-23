@@ -6,5 +6,6 @@ export const useMenuStore = defineStore('menuStore', {
             menus: [],
             currentMenuId: 0
         }
-    )
+    ),
+    persist: true
 })
