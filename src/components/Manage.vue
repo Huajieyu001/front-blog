@@ -1,79 +1,73 @@
-<!-- <template>
-  <el-row :gutter="200">
-    <el-col :span="distance" v-for="(item, index) in menuItems" :key="index">
-        <div @click="toTopMenu(item.link)" class="menu-item">{{ item.label }}</div>
-    </el-col>
-  </el-row>
+<!-- <template lang="">
+    <div class="layout">
+        <el-splitter>
+            <el-splitter-panel class="aside-panel" :size="150" :max="150">
+                <el-menu
+                  default-active="2"
+                  class="el-menu-vertical-demo"
+                  :collapse="isCollapse"
+                  @open="handleOpen"
+                  @close="handleClose"
+                >
+                  <el-menu-item v-for="(menu, index) in menuItems" :key="menu.label" :index="index">
+                    <template #title><span>{{ menu.label }}</span></template>
+                  </el-menu-item>
+                </el-menu>
+            </el-splitter-panel>
+            <el-splitter-panel>
+                <router-view></router-view>
+            </el-splitter-panel>
+        </el-splitter>
+    </div>
 </template> -->
 
-<!-- <script setup>
-import { reactive, ref, watch, watchEffect } from 'vue';
-import { useRouter } from 'vue-router'
-
-const distance = ref(0)
-
-const router = useRouter()
-
-// 菜单项数据
-const menuItems = reactive([
-  { label: '文章管理', link: '/articleManage' },
-  { label: '菜单管理', link: '/menuManage' },
-  { label: '信息管理', link: '/infoManage' },
-]);
-
-const toTopMenu = (path) => {
-  router.push({
-    path
-  })
-}
-
-watchEffect(()=>{
-
-  console.log(menuItems)
-  if(menuItems.length){
-    distance.value = 24 / menuItems.length;
-    console.log('@@@@@@@@', distance.value)
-  }
-})
-
-
-</script> -->
 <template>
-  <div class="tabe"></div>
-  <el-menu
-    default-active="2"
-    class="el-menu-vertical-demo"
-    :collapse="isCollapse"
-    @open="handleOpen"
-    @close="handleClose"
-  >
-    <el-menu-item v-for="(menu, index) in menuItems" :key="menu.label" :index="index">
-      <template #title><span>{{ menu.label }}</span></template>
-    </el-menu-item>
-  </el-menu>
+    <div class="layout">
+        <el-splitter>
+            <el-splitter-panel class="aside-panel" :size="150" :max="150">
+                <el-menu
+                  class="el-menu-vertical-demo"
+                >
+                  <el-menu-item v-for="(menu, index) in menuItems" :key="menu.label" :index="index" @click="changeView(menu.link)">
+                    <template #title><span>{{ menu.label }}</span></template>
+                  </el-menu-item>
+                </el-menu>
+            </el-splitter-panel>
+            <el-splitter-panel>
+                <router-view></router-view>
+            </el-splitter-panel>
+        </el-splitter>
+    </div>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const menuItems = reactive([
   {
     label: '用户管理',
-    link: '/aaa'
+    link: '/manage/user'
+  },
+  {
+    label: '菜单管理',
+    link: '/manage/menu'
   },
   {
     label: '文章管理',
-    link: '/bbb'
-  },
-    {
-    label: '新增文章',
-    link: '/article'
+    link: '/manage/article'
   },
   {
     label: '推荐管理',
-    link: '/ccc'
+    link: '/manage/link'
   }
 ])
+
+const changeView = (link)=>{
+    router.push(link)
+}
 
 const isCollapse = ref(false)
 const handleOpen = (key: string, keyPath: string[]) => {
@@ -84,14 +78,16 @@ const handleClose = (key: string, keyPath: string[]) => {
 }
 </script>
 
-<style>
-.tabe{
-  background-color: black;
-  height: 30px;
-}
+<style scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  min-height: 90vh;
+  min-height: 98vh;
   background-color: aquamarine;
+}
+
+.layout{
+    display: flex;
+    background-color: #fef9f4;
+    /* border-radius: 24px;  */
+    border: solid 0.5px skyblue;
 }
 </style>

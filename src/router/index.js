@@ -9,6 +9,7 @@ import WebRed from "../views/WebRed.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
 import ArticleManage from "../views/ArticleManage.vue";
+import ManageMenu from "../components/ManageMenu.vue";
 
 const routes = [
     {
@@ -38,7 +39,14 @@ const routes = [
     {
         path: '/manage',
         name: 'Manage',
-        component: Manage
+        component: Manage,
+        children:[
+            {
+                path: '/manage/menu',
+                name: 'ManageMenu',
+                component: ManageMenu,
+            }
+        ]
     },
     {
         path: '/publish',

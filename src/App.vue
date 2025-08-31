@@ -34,11 +34,18 @@ const currentLayout = computed(()=>{
 </script>
 
 <style scoped>
-.layout {
+/* .layout {
     display: flex;
     background-color: greenyellow;
     border-radius: 24px;
-}
+} */
+
+/* #app{
+    width: 100vw;
+    height: 100vh;
+} */
+
+
 
 aside {
     flex: 0 0 400px;

@@ -6,10 +6,10 @@
                 label-width="auto"
                 :model="form"
                 :rules="rules"
-                style="max-width: 600px"
+                style="max-width: 600px;"
             >
-                <el-form-item label="账号" :label-position="itemLabelPosition" prop="account">
-                    <el-input v-model="form.account" clearable style="width: 240px;"/>
+                <el-form-item label="账号" :label-position="itemLabelPosition" prop="username">
+                    <el-input v-model="form.username" clearable style="width: 240px;"/>
                 </el-form-item>
                 <el-form-item label="密码" :label-position="itemLabelPosition">
                     <el-input v-model="form.password" type="password" show-password clearable style="width: 240px;"/>
@@ -19,6 +19,9 @@
                     <el-button @click="toSignup">没有账号？去注册</el-button>
                     <el-button @click="login">登录</el-button>
                 </el-form-item>
+                <div style="text-align: center;">
+                    <small v-show="errMsg" style="color: red;">{{ errMsg }}</small>
+                </div>
             </el-form>
         </div>
     </div>
@@ -30,17 +33,25 @@ import { reactive, ref } from 'vue'
 import type { FormItemProps, FormProps, FormRules } from 'element-plus'
 import { useRouter } from 'vue-router';
 import { REGEX } from '../utils/constants';
+import { apiLogin } from '../axios/accountAxios';
 
 const router = useRouter()
 const labelPosition = ref<FormProps['labelPosition']>('right')
 const itemLabelPosition = ref<FormItemProps['labelPosition']>('')
 const form = reactive({
-    account: '',
+    username: '',
     password: '',
 })
+const errMsg = ref('')
 
-const login = ()=> {
-    console.log(form)
+const login = async ()=> {
+    const data = await apiLogin(form)
+    if (data.code == 200){
+        localStorage.setItem('huajieyu_blog_auth', data.data)
+        toHome()
+    } else {
+        errMsg.value = data.msg
+    }
 }
 
 const toHome = ()=>{
@@ -53,7 +64,7 @@ const toSignup = ()=>{
 
 const checkAccount = (rule: any, value: String, callback: any) => {
     if(!value){
-        callback(new Error('Please input account'))
+        callback(new Error('Please input username'))
     }
     if(!REGEX.accountRegex.test(value)){
         callback(new Error('请输入正确格式的账号'))
@@ -61,7 +72,7 @@ const checkAccount = (rule: any, value: String, callback: any) => {
 }
 
 const rules = reactive<FormRules<typeof ruleform>>({
-    account: [{validator: checkAccount, trigger: 'blur'}]
+    username: [{validator: checkAccount, trigger: 'blur'}]
 })
 </script>
 
@@ -78,7 +89,7 @@ const rules = reactive<FormRules<typeof ruleform>>({
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 300px;
+    /* min-width: 800px; */
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
