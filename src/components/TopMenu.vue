@@ -1,15 +1,18 @@
 <template>
-  <!-- 菜单容器 -->
-  <nav class="top-menu">
-    <!-- 使用 ul 和 li 创建菜单项 -->
+  <!-- <nav class="top-menu">
     <ul class="menu-list">
       <li v-for="(item, index) in menuItems" :key="index" class="menu-item" :class="{ 'menuActive': item.label == currentLabel}">
-        <!-- <a :href="item.link" class="menu-link">{{ item.label }}</a> -->
-        <!-- <div @click="fff(item)" class="menu-link">{{ item.label }}</div> -->
         <div @click="toTopMenu(item)" class="menu-link">{{ item.label }}</div>
       </li>
     </ul>
-  </nav>
+  </nav> -->
+
+  <el-row :gutter="20">
+    <el-col :span="6"><div class="grid-content ep-bg-purple" /></el-col>
+    <el-col :span="6"><div class="grid-content ep-bg-purple" /></el-col>
+    <el-col :span="6"><div class="grid-content ep-bg-purple" /></el-col>
+    <el-col :span="6"><div class="grid-content ep-bg-purple" /></el-col>
+  </el-row>
 </template>
 
 <script setup>

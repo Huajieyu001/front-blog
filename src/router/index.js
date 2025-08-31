@@ -6,6 +6,9 @@ import ArticleDetail from "../components/ArticleDetail.vue";
 import Manage from "../components/Manage.vue";
 import Publish from "../components/Publish.vue";
 import WebRed from "../views/WebRed.vue";
+import Login from "../views/Login.vue";
+import Signup from "../views/Signup.vue";
+import ArticleManage from "../views/ArticleManage.vue";
 
 const routes = [
     {
@@ -41,7 +44,22 @@ const routes = [
         path: '/publish',
         name: 'Publish',
         component: Publish
-    }
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        path: '/signup',
+        name: 'Signup',
+        component: Signup
+    },
+    {
+        path: '/articleManage',
+        name: 'ArticleManage',
+        component: ArticleManage
+    },
 ]
 
 

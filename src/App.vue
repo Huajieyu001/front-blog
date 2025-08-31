@@ -69,7 +69,6 @@ main {
 
 .router-link-exact-active {
     color: red;
-    /* background-color: aqua; */
     border: 0.5px solid red;
 }
 

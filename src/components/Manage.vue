@@ -1,23 +1,21 @@
-<template>
-  <!-- 菜单容器 -->
-  <nav class="top-menu">
-    <!-- 使用 ul 和 li 创建菜单项 -->
-    <ul class="menu-list">
-      <li v-for="(item, index) in menuItems" :key="index" class="menu-item">
-        <div @click="toTopMenu(item.link)" class="menu-link">{{ item.label }}</div>
-      </li>
-    </ul>
-  </nav>
-</template>
+<!-- <template>
+  <el-row :gutter="200">
+    <el-col :span="distance" v-for="(item, index) in menuItems" :key="index">
+        <div @click="toTopMenu(item.link)" class="menu-item">{{ item.label }}</div>
+    </el-col>
+  </el-row>
+</template> -->
 
-<script setup>
-import { ref } from 'vue';
+<!-- <script setup>
+import { reactive, ref, watch, watchEffect } from 'vue';
 import { useRouter } from 'vue-router'
+
+const distance = ref(0)
 
 const router = useRouter()
 
 // 菜单项数据
-const menuItems = ref([
+const menuItems = reactive([
   { label: '文章管理', link: '/articleManage' },
   { label: '菜单管理', link: '/menuManage' },
   { label: '信息管理', link: '/infoManage' },
@@ -28,88 +26,72 @@ const toTopMenu = (path) => {
     path
   })
 }
+
+watchEffect(()=>{
+
+  console.log(menuItems)
+  if(menuItems.length){
+    distance.value = 24 / menuItems.length;
+    console.log('@@@@@@@@', distance.value)
+  }
+})
+
+
+</script> -->
+<template>
+  <div class="tabe"></div>
+  <el-menu
+    default-active="2"
+    class="el-menu-vertical-demo"
+    :collapse="isCollapse"
+    @open="handleOpen"
+    @close="handleClose"
+  >
+    <el-menu-item v-for="(menu, index) in menuItems" :key="menu.label" :index="index">
+      <template #title><span>{{ menu.label }}</span></template>
+    </el-menu-item>
+  </el-menu>
+</template>
+
+<script lang="ts" setup>
+import { reactive, ref } from 'vue'
+
+const menuItems = reactive([
+  {
+    label: '用户管理',
+    link: '/aaa'
+  },
+  {
+    label: '文章管理',
+    link: '/bbb'
+  },
+    {
+    label: '新增文章',
+    link: '/article'
+  },
+  {
+    label: '推荐管理',
+    link: '/ccc'
+  }
+])
+
+const isCollapse = ref(false)
+const handleOpen = (key: string, keyPath: string[]) => {
+  console.log(key, keyPath)
+}
+const handleClose = (key: string, keyPath: string[]) => {
+  console.log(key, keyPath)
+}
 </script>
 
-<style scoped>
-/* 菜单容器 - 占据整个顶部 */
-.top-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  /* 稍大于菜单高度，留出空间 */
-  background: #ffffff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
+<style>
+.tabe{
+  background-color: black;
+  height: 30px;
 }
-
-/* 水平菜单列表 */
-.menu-list {
-  display: flex;
-  justify-content: space-around;
-  /* 均匀分布 */
-  list-style-type: none;
-  /* 移除默认列表样式 */
-  padding: 0;
-  margin: 0;
-  height: 100%;
-}
-
-/* 菜单项 - 均匀扩展 */
-.menu-item {
-  flex: 1;
-  /* 关键：使所有项目均匀分布 */
-  display: flex;
-  align-items: center;
-  /* 垂直居中 */
-  justify-content: center;
-  /* 水平居中 */
-  height: 20px;
-  margin: 15px 0;
-  /* 与容器高度配合实现20px视觉效果 */
-}
-
-/* 菜单链接样式 */
-.menu-link {
-  /* background-color: transparent; */
-  display: block;
-  width: 100%;
-  text-align: center;
-  text-decoration: none;
-  color: #333;
-  /* font-weight: 500; */
-  font-size: large;
-  padding: 3px 0;
-  transition: all 0.3s ease;
-
-  /* 确保文本不会换行 */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* 鼠标悬停效果 */
-.menu-link:hover {
-  color: #2c83f0;
-  background-color: bisque;
-}
-
-/* 可选：当前激活状态 */
-.menu-link.active {
-  color: #2c83f0;
-  border-bottom: 2px solid #2c83f0;
-}
-
-/* 响应式处理 - 屏幕过小时改为垂直菜单 */
-@media (max-width: 768px) {
-  .menu-list {
-    flex-direction: column;
-  }
-
-  .menu-item {
-    height: auto;
-    padding: 8px 0;
-  }
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 90vh;
+  background-color: aquamarine;
 }
 </style>
