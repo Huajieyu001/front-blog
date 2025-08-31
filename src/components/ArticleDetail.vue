@@ -1,5 +1,19 @@
 <template>
-    <div class="markdown-body" v-html="data.content"></div>
+    <div>
+      <h1>
+        {{ data.title }}
+      </h1>
+      <pre class="summary">
+        {{ data.summary }}
+      </pre>
+    </div>
+    <div class="md-body">
+      <div class="markdown-body" v-html="data.content"></div>
+    </div>
+    <div style="margin-top: 20px">
+      本文章由{{ data.createBy }}发布于{{ data.createTime }}
+      <div v-if="data.updateTime">最后更新于{{ data.updateTime }}</div>
+    </div>
 </template>
 
 <script setup>
@@ -14,7 +28,11 @@ const route = useRoute()
 const data = reactive({
   title: '',
   summary: '',
-  content: ''
+  content: '',
+  createBy: '',
+  createTime: '',
+  updateBy: '',
+  updateTime: ''
 })
 
 const initArticle = async ()=>{
@@ -24,6 +42,7 @@ const initArticle = async ()=>{
     let parsedHtml = ref(parseMarkdown(data.content))
     data.content = ref(DOMPurify.sanitize(parsedHtml.value)).value
   }
+  console.log("888888888", data.summary)
 }
 
 onMounted(()=>{
@@ -33,12 +52,42 @@ onMounted(()=>{
 </script>
 
 <style scoped>
+.title{
+  font-weight: bold;
+  font-size: large;
+  /* background-color: #a7dae5; */
+  max-width: 80vw;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 2px;
+  border-radius: 5px;
+  border: groove;
+}
+
+.summary{
+  font-size: medium;
+  color: gray;
+  /* background-color: #a7dae5; */
+  max-width: 80vw;
+  margin-top: 10px;
+  padding: 2px;
+  border-radius: 5px;
+  border: solid 0.3px;
+}
+
+.md-body{
+  max-width: 80vw;
+}
+
+
 .markdown-body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 修改字体 */
   background-color: #f8f9fa; /* 修改背景 */
   color: #333; /* 修改文字颜色 */
   padding: 20px;
   border-radius: 8px;
+  border: inset;
+  margin-top: 20px;
 }
 
 /* 修改标题样式 */

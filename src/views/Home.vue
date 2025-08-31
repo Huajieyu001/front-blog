@@ -1,19 +1,22 @@
 <template>
+    <!-- <TopMenu></TopMenu> -->
     <div class="container">
         <div class="layout">
             <el-splitter>
-                <el-splitter-panel :size="200" :max="200" :min="10">
+                <el-splitter-panel class="aside-panel" :size="150" :max="150">
                     <aside>
                         <Aside></Aside>
                     </aside>
                 </el-splitter-panel>
                 <el-splitter-panel>
-                    <main class="app-main">
-                        <Main></Main>
-                    </main>
-                    <footer>
-                        <Footer></Footer>
-                    </footer>
+                    <div class="right-chunk">
+                        <main class="app-main">
+                            <Main></Main>
+                        </main>
+                        <div class="blog-foot">
+                            <Footer></Footer>
+                        </div>
+                    </div>
                 </el-splitter-panel>
             </el-splitter>
         </div>
@@ -27,13 +30,14 @@ import Footer from '../components/Footer.vue'
 import Aside from '../components/Aside.vue'
 import { useHomeStore } from '../store/homeStore'
 import { useMenuStore } from '../store/menuStore'
-import { getMenus } from '../axios/menuAxios'
+import { apiMenuList } from '../axios/menuAxios'
+import TopMenu from '../components/TopMenu.vue'
 
 const homeStore = useHomeStore()
 const menuStore = useMenuStore()
 
 const initMenu = async ()=>{
-    const data = await getMenus()
+    const data = await apiMenuList()
     menuStore.menus = data
     console.log("@@@@@@@", data)
     menuStore.currentMenuId = data[0].id
@@ -45,10 +49,18 @@ onMounted(()=>{
 </script>
 
 <style scoped>
+
+/* .aside-panel{
+    max-width: 20vw;
+} */
+
+/* .container{
+    margin-top: 30px;
+} */
+
 .layout{
     display: flex;
     background-color: #fef9f4;
-    /* border-radius: 24px;  */
     border: solid 0.5px skyblue;
 }
 
@@ -62,7 +74,7 @@ aside {
     flex-direction: column;
     overflow: hidden;
     transition: all 0.3s ease;
-    height: 100%;
+    height: 98vh;
     /* margin-right: 20px; */
 }
 main {
@@ -73,5 +85,20 @@ main {
     /* border-top-right-radius: 24px; */
     overflow: hidden;
     transition: transform 0.3s ease;
+}
+
+.right-chunk{
+    width: 100%;
+    height: 100%;
+    /* justify-content: center;
+    align-items: center; */
+    /* position: relative; */
+    display: flex;            /* 关键：使用 flex 布局 */
+    flex-direction: column;   /* 关键：垂直方向排列 */
+    justify-content: space-between; /* 关键：内容在两端分布 */
+}
+
+.blog-foot{
+    text-align: center;
 }
 </style>

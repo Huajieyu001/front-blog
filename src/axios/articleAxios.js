@@ -2,7 +2,7 @@ import http from "./httpUtils";
 
 const apiArticleAdd = async (obj) => {
     return http
-        .post("/article", {
+        .post("/article/add", {
             ...obj,
         })
         .then(
@@ -28,7 +28,7 @@ const apiArticleList = async (menuId, pageNum, pageSize) => {
 };
 
 const apiArticleGet = async (id) => {
-    const data = await http.get("/article", {
+    const data = await http.get("/article/get", {
         params:{
             id
         }
