@@ -1,5 +1,8 @@
 <template>
     <!-- <Operation></Operation> -->
+     <div style="margin: 20px;">
+        选择分类 &nbsp;<SelectMenu></SelectMenu>
+     </div>
     <Summary v-if="article.records && article.records.length > 0"
             v-for="item in article.records" 
             :key="item"
@@ -20,8 +23,7 @@
         v-model:current-page="pageNum"
         :background="back"
         class="pageHelper left-distance"
-    />
-        
+    /> 
 </template>
 
 <script setup>
@@ -30,6 +32,7 @@ import Summary from './Summary.vue'
 import { apiArticleList } from '../axios/articleAxios'
 import { useRouter } from 'vue-router';
 import { useMenuStore } from '../store/menuStore';
+import SelectMenu from './SelectMenu.vue';
 
 const pageNum = ref(1)
 const pageSize = ref(10)
@@ -47,9 +50,9 @@ onMounted(()=>{
     initList(1, 10)
 })
 
-const initList = async(pageNum, pageSize)=>{
-    const data = await apiArticleList(menuStore.currentMenuId, pageNum, pageSize)
-    Object.assign(article, {...data})
+const initList = async(pageNum, pageSize, menuId)=>{
+    const resp = await apiArticleList(menuId, pageNum, pageSize)
+    Object.assign(article, {...resp.data.data})
 }
 
 const readArticle = (id)=>{
@@ -62,7 +65,7 @@ const readArticle = (id)=>{
 }
 
 watchEffect(()=>{
-    initList(pageNum.value, pageSize.value)
+    initList(pageNum.value, pageSize.value, menuStore.currentMenuId)
 })
 
 </script>

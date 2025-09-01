@@ -1,7 +1,7 @@
 <template>
-    <el-select v-model="selectedMenuId" placeholder="Select" style="width: 240px">
+    <el-select v-model="menuStore.currentMenuId" placeholder="Select" style="width: 240px">
         <el-option
-        v-for="item in menuStore.menus"
+        v-for="item in menuList"
         :key="item.id"
         :label="item.name"
         :value="item.id"
@@ -11,17 +11,41 @@
 
 <script setup>
 import { useMenuStore } from '../store/menuStore';
-import { useArticleStore } from '../store/articleStore';
-import { watchEffect, ref } from 'vue';
-
-const selectedMenuId = ref(null)
+import { watchEffect, onMounted, reactive } from 'vue';
+import { apiMenuList } from '../axios/menuAxios';
 
 const menuStore = useMenuStore()
-const articleStore = useArticleStore()
+
+const menuList = reactive([])
+
+onMounted(()=>{
+  init()
+})
+
+const init = async ()=>{
+  const resp = await apiMenuList()
+  Object.assign(menuList, {...resp.data.data})
+  menuList.unshift({id: null, name: ''})
+  processResponse(resp, true)
+}
 
 watchEffect(()=>{
-  articleStore.menuId = selectedMenuId.value
+  // articleStore.menuId = selectedMenuId.value
 })
+
+const processResponse = (resp, notRequiresRefresh)=> {
+    if(resp.status == 401){
+        router.push("/login")
+        return
+    }
+    if (resp.data.code == 200){
+        if(!notRequiresRefresh){
+            location.reload()
+        }
+    } else {
+        alert(resp.data.msg)
+    }
+}
 </script>
 
 <style scoped>

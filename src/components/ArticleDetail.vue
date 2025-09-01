@@ -42,7 +42,6 @@ const initArticle = async ()=>{
     let parsedHtml = ref(parseMarkdown(data.content))
     data.content = ref(DOMPurify.sanitize(parsedHtml.value)).value
   }
-  console.log("888888888", data.summary)
 }
 
 onMounted(()=>{
