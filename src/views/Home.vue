@@ -24,28 +24,27 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue'
-import Main from '../components/Main.vue'
-import Footer from '../components/Footer.vue'
-import Aside from '../components/Aside.vue'
-import { useHomeStore } from '../store/homeStore'
-import { useMenuStore } from '../store/menuStore'
-import { apiMenuList } from '../axios/menuAxios'
-import TopMenu from '../components/TopMenu.vue'
+// import { onMounted, reactive } from 'vue'
+// import Main from '../components/Main.vue'
+// import Footer from '../components/Footer.vue'
+// import Aside from '../components/Aside.vue'
+// import { useHomeStore } from '../store/homeStore'
+// import { useMenuStore } from '../store/menuStore'
+// import { apiMenuList } from '../axios/menuAxios'
+// import TopMenu from '../components/TopMenu.vue'
 
-const homeStore = useHomeStore()
-const menuStore = useMenuStore()
+// const homeStore = useHomeStore()
+// const menuStore = useMenuStore()
 
-const initMenu = async ()=>{
-    const data = await apiMenuList()
-    menuStore.menus = data
-    console.log("@@@@@@@", data)
-    menuStore.currentMenuId = data[0].id
-}
+// const initMenu = async ()=>{
+//     const data = await apiMenuList()
+//     menuStore.menus = data
+//     menuStore.currentMenuId = data[0].id
+// }
 
-onMounted(()=>{
-    initMenu()
-})
+// onMounted(()=>{
+//     initMenu()
+// })
 </script>
 
 <style scoped>

@@ -1,9 +1,11 @@
 <template>
     <div class="menu">
-        <div v-for="(item) in menuStore.menus"
-        :key="item.id" class="nav-item"
-        :class="{active: item.id == menuStore.currentMenuId}"
-        @click="selectMenu(item.id, item.isActive)">{{ item.name }}</div>
+        <el-scrollbar max-height="400">
+            <div v-for="(item) in menuStore.menus"
+                :key="item.id" class="nav-item"
+                :class="{active: item.id == menuStore.currentMenuId}"
+                @click="selectMenu(item.id, item.isActive)">{{ item.name }}</div>
+        </el-scrollbar>
     </div>
 </template>
 <script setup>

@@ -18,10 +18,10 @@ const useArticleStore = defineStore("articleStore", {
 
 const clearArticleStore = ()=>{
     const articleStore = useArticleStore()
+    articleStore.menuId = null
     articleStore.title= ''
     articleStore.summary= ''
     articleStore.content= ''
-    console.log("+++", articleStore)
 }
 
 export { useArticleStore, clearArticleStore}

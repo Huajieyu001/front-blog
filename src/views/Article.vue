@@ -70,17 +70,21 @@ import { useArticleStore, clearArticleStore } from '../store/articleStore';
 import Pad from '../components/Pad.vue';
 import SelectMenu from '../components/SelectMenu.vue';
 import { apiArticleAdd } from '../axios/articleAxios';
+import { useRouter, useRoute } from 'vue-router'
+import { apiArticleGet, apiArticleUpdate } from '../axios/articleAxios'
 import { useMenuStore } from '../store/menuStore';
-import { useRouter } from 'vue-router'
 
 const dialogVisible = ref(false)
 const currentAnimation = ref('bounce')
 const isObjectConfig = ref(false)
 const router = useRouter()
+const route = useRoute()
 const selectMenu = ref(null)
 const inputTitle = ref(null)
 const currentMsg = ref(null)
 const dialogTitle = ref(null)
+const editId = ref(null)
+const menuStore = useMenuStore()
 
 const buttonDetail = reactive({
     publish: {
@@ -132,24 +136,39 @@ const check = ()=>{
 
 const openDialog = (type) => {
     check()
-  currentAnimation.value = type
-  isObjectConfig.value = false
-  dialogVisible.value = true
+    currentAnimation.value = type
+    isObjectConfig.value = false
+    dialogVisible.value = true
 }
 const articleStore = useArticleStore()
 
 function publish(){
-    apiArticleAdd(articleStore)
+    if(editId.value){
+        apiArticleUpdate(articleStore)
+    } else {
+        apiArticleAdd(articleStore)
+    }
     // 提交完成后，把编辑页的信息清空
     clearArticleStore()
     dialogVisible.value = false
     router.push({
-        path: '/publish'
+        path: '/'
     })
 }
 
+watchEffect(()=>{
+    articleStore.menuId = menuStore.currentMenuId
+})
+
 const editor = ref(null)
 onMounted(() => {
+    editId.value = route.query.id
+    if(editId.value){
+        initArticle(editId.value)
+    } else {
+        clearArticleStore()
+    }
+
   editor.value = new Vditor('vditor', {
     cdn: `${location.origin}${import.meta.env.BASE_URL}vditor`,
     height: 'calc(100vh - 60px)',
@@ -288,6 +307,26 @@ onMounted(() => {
     }
   })
 })
+
+const initArticle = async (id)=>{
+  const resp = await apiArticleGet(id)
+  Object.assign(articleStore, {...resp.data.data})
+  processResponse(resp, true)
+}
+
+const processResponse = (resp, notRequiresRefresh)=> {
+    if(resp.status == 401){
+        router.push("/login")
+        return
+    }
+    if (resp.data.code == 200){
+        if(!notRequiresRefresh){
+            location.reload()
+        }
+    } else {
+        alert(resp.data.msg)
+    }
+}
 
 </script>
 <style>
