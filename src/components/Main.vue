@@ -1,9 +1,9 @@
 <template>
     <!-- <Operation></Operation> -->
      <div style="margin: 20px;">
-        选择分类 &nbsp;<SelectMenu></SelectMenu>
+        筛选 &nbsp;<SelectMenu></SelectMenu>
      </div>
-    <Summary v-if="article.records && article.records.length > 0"
+    <!-- <Summary v-if="article.records && article.records.length > 0"
             v-for="item in article.records" 
             :key="item"
             @click="readArticle(item.id)">
@@ -13,7 +13,8 @@
         <template v-slot:summary>
             概述：{{ item.summary }}
         </template>
-    </Summary>
+    </Summary> -->
+    <ArticleTab v-for="item in article.records" :article="item" :key="item.id"></ArticleTab>
     <div class="record left-distance">共有{{ article.total }}条记录</div>
     <el-pagination
         :page-size="pageSize"
@@ -33,6 +34,7 @@ import { apiArticleList } from '../axios/articleAxios'
 import { useRouter } from 'vue-router';
 import { useMenuStore } from '../store/menuStore';
 import SelectMenu from './SelectMenu.vue';
+import ArticleTab from './ArticleTab.vue';
 
 const pageNum = ref(1)
 const pageSize = ref(10)

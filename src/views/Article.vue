@@ -67,7 +67,6 @@ import { ref, onMounted, computed, watchEffect, reactive } from 'vue';
 import Vditor from 'vditor';
 import 'vditor/dist/index.css'
 import { useArticleStore, clearArticleStore } from '../store/articleStore';
-import Pad from '../components/Pad.vue';
 import SelectMenu from '../components/SelectMenu.vue';
 import { apiArticleAdd } from '../axios/articleAxios';
 import { useRouter, useRoute } from 'vue-router'
