@@ -1,5 +1,5 @@
 <template>
-    <h1>发布成功，3S后返回主页</h1>
+    <h1>发布成功，即将返回主页</h1>
 </template>
 
 <script setup>
@@ -13,7 +13,7 @@ onMounted(()=>{
         router.push({
             path: "/"
         })
-    }, 3000)
+    }, 1000)
 })
 
 </script>

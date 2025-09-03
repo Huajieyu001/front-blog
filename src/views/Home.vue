@@ -4,7 +4,7 @@
         <div class="layout">
             <el-splitter>
                 <el-splitter-panel class="aside-panel" :size="150" :max="150">
-                    <aside>
+                    <aside class="left-chunk">
                         <Aside></Aside>
                     </aside>
                 </el-splitter-panel>
@@ -84,6 +84,10 @@ main {
     /* border-top-right-radius: 24px; */
     overflow: hidden;
     transition: transform 0.3s ease;
+}
+
+.left-chunk{
+    height: 100%;
 }
 
 .right-chunk{
