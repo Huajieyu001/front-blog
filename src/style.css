@@ -5,39 +5,18 @@ body {
     color: #333;
     line-height: 1.6;
     /* min-height: 100%; */
+    /* background-color: #1E1E1E; */
     background-color: #e9f0ee;
     /* padding: 20px; */
     /* z-index: 30; */
     /* background-color: pink; */
 }
 
-/* body {
-    background-color: red;
-    min-height: 100%;
-    width: 100%;
-    z-index: 16;
-} */
-
-/* #app {
-    background-color: black;
-    min-height: 100%;
-    width: 100%;
-    z-index: 16;
-} */
-
-/* #app{
-    background: rgb(32, 155, 59);
-    height: 100vh;
-    width: 100%;
-} */
-
 #app{
     width: 100%;
     height: 100%;
 }
-
-
-
+/*------------------------------------------------*/
 .dialog-scale-enter-active,
 .dialog-scale-leave-active,
 .dialog-scale-enter-active .el-dialog,
@@ -111,4 +90,73 @@ body {
 .dialog-custom-object-leave-to .el-dialog {
   transform: rotate(180deg) scale(0.5);
   opacity: 0;
+}
+
+/* --------------------------------------------- */
+
+.markdown-container {
+  padding: 1em;
+  font-family: 'Arial', sans-serif;
+}
+
+/* 代码块基础样式（与主题匹配） */
+.markdown-container pre {
+  margin: 1.5em 0;
+  padding: 1em;
+  border-radius: 8px;
+  overflow: auto; /* 水平滚动 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 代码块容器（pre）：左边留出足够空间放行号（行号宽度+间距） */
+.code-block {
+  position: relative;
+  padding-left: 5em; /* 关键：行号宽度（3em）+ 间距（0.5em），避免重叠 */
+  margin: 1em 0;
+  /* border: 1px solid #eeeeee; */
+  /* border-radius: 4px; */
+  overflow: auto;
+  background-color: #282c34;
+}
+
+/* 行号（用CSS计数器生成） */
+.code-block .line::before {
+  content: counter(line-number); /* 显示行号 */
+  counter-increment: line-number; /* 递增计数器 */
+  position: absolute; /* 绝对定位在左边 */
+  left: 0; /* 对齐容器左边 */
+  width: 3em; /* 行号宽度（需小于等于padding-left） */
+  text-align: right; /* 行号右对齐，与代码间距更合理 */
+  color: #ffffffc9; /* 行号颜色 */
+  padding-right: 0.5em; /* 行号与代码之间的间距（避免重叠） */
+  user-select: none; /* 禁止选中行号 */
+  font-size: 0.9em; /* 行号字体比代码小一点，更清晰 */
+  line-height: 1.6; /* 与代码行高一致，避免行号上下重叠 */
+}
+
+/* 代码内容（code）：确保不覆盖行号 */
+.code-block code {
+  display: block;
+  padding: 0.8em 0; /* 上下内边距，避免代码与容器顶部/底部重叠 */
+  font-size: 1.2em;
+  line-height: 1.6;
+  /* font-family: 'Fira Code', monospace; */
+  font-family: Source Code Pro,DejaVu Sans Mono,Ubuntu Mono,Anonymous Pro,Droid Sans Mono,Menlo,Monaco,Consolas,Inconsolata,Courier,monospace,PingFang SC,Microsoft YaHei,sans-serif!important;
+}
+
+/* 行元素（span.line）：确保代码行与行号一一对应 */
+.code-block .line {
+  display: block;
 }

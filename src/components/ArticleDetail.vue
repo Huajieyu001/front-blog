@@ -1,28 +1,30 @@
 <template>
+      <!-- <el-button type="primary">Offset top 120px</el-button> -->
+      <router-link :to="'/'" class="go-home">返回首页</router-link>
     <div>
-      <h1>
+      <div class="article-title">
         {{ data.title }}
-      </h1>
-      <pre class="summary">
+      </div>
+      <p class="summary">
         {{ data.summary }}
-      </pre>
+      </p>
     </div>
-    <div class="md-body">
-      <div class="markdown-body" v-html="data.content"></div>
+    <div class="markdown-content" v-html="parsedContent"></div>
+    <div style="margin-top: 20px; margin-bottom: 50px">
+      本文章<span v-if="data.createBy">由&nbsp;{{ data.createBy }}&nbsp;</span>发布于&nbsp;{{ data.createTime }}
+      <div v-if="data.updateTime">最后更新于&nbsp;{{ data.updateTime }}</div>
     </div>
-    <div style="margin-top: 20px">
-      本文章由{{ data.createBy }}发布于{{ data.createTime }}
-      <div v-if="data.updateTime">最后更新于{{ data.updateTime }}</div>
-    </div>
+    <el-backtop :right="100" :bottom="100" />
+    <Footer class="footer"></Footer>
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, watchEffect, nextTick  } from 'vue';
 import { parseMarkdown } from '../utils/markdownParser';
-import DOMPurify from 'dompurify';
 import { apiArticleGet } from '../axios/articleAxios'
 import { useRoute } from 'vue-router';
 import 'github-markdown-css';
+import { addLineNumbers } from '../utils/lineNumberUtils';
 
 const route = useRoute()
 const data = reactive({
@@ -34,99 +36,109 @@ const data = reactive({
   updateBy: '',
   updateTime: ''
 })
+const parsedContent = ref()
 
 const initArticle = async ()=>{
-  const meta = await apiArticleGet(route.query.id)
-  Object.assign(data, {...meta.data,})
-  if(data.content){
-    let parsedHtml = ref(parseMarkdown(data.content))
-    data.content = ref(DOMPurify.sanitize(parsedHtml.value)).value
-  }
+  const resp = await apiArticleGet(route.query.id)
+  Object.assign(data, {...resp.data.data})
+  // if(data.content){
+  //   console.log("JIEJIEJIEJIEJIE")
+  //   parsedContent.value = parseMarkdown(data.content)
+  //   console.log("JIEJIEJIEJIEJIE")
+  //   // console.log(parsedHtml)
+  //   parsedContent.value = parsedContent.value.replaceAll('\n', '<br/>')
+  //   console.log("JIEJIEJIEJIEJIE")
+  //   // data.content = ref(DOMPurify.sanitize(parsedHtml.value)).value
+  // }
+
+  // lineNumbers(hljs)
+  nextTick(() => {
+    addLineNumbers('pre code')
+  });
 }
 
 onMounted(()=>{
   initArticle()
+
 })
 
+watchEffect(()=>{
+  parsedContent.value = parseMarkdown(data.content || '');
+  // parsedContent.value = parsedContent.value.replaceAll('\n\n', '\n<br/>')
+})
 </script>
 
 <style scoped>
-.title{
-  font-weight: bold;
-  font-size: large;
-  /* background-color: #a7dae5; */
-  max-width: 80vw;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  padding: 2px;
-  border-radius: 5px;
-  border: groove;
+.article-title{
+  font-size: 40px;
+  font-weight: 600;
 }
 
 .summary{
-  font-size: medium;
-  color: gray;
-  /* background-color: #a7dae5; */
-  max-width: 80vw;
-  margin-top: 10px;
-  padding: 2px;
-  border-radius: 5px;
+  font-size: x-large;
+  color: #00000076;
+  background-color: #ebeeef;
+  margin-top: 30px;
+  padding: 12px;
+  /* border-radius: 5px; */
   border: solid 0.3px;
 }
 
-.md-body{
-  max-width: 80vw;
+
+.go-home {
+    font-size: xx-large;
+    color: #64aad8;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
 }
 
-
-.markdown-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 修改字体 */
-  background-color: #f8f9fa; /* 修改背景 */
-  color: #333; /* 修改文字颜色 */
-  padding: 20px;
-  border-radius: 8px;
-  border: inset;
-  margin-top: 20px;
+.go-home {
+    margin-left: 5px;
+    transition: transform 0.3s ease;
 }
 
-/* 修改标题样式 */
-.markdown-body h1 {
-  color: #1a73e8;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 0.3em;
+.go-home:hover {
+    color: #2980b9;
 }
 
-.markdown-body a:hover {
-  text-decoration: underline;
+.go-home:hover i {
+    transform: translateX(3px);
 }
 
-/* 修改代码块背景和文字 */
-.markdown-body pre {
-  background-color: #efe7e7;
-  color: #f8f8f6;
+.markdown-content{
   padding: 16px;
-  border-radius: 16px;
-  overflow-x: auto;
+  border: solid 0.3px #00000076;
 }
 
-/* 修改行内代码 */
-.markdown-body code {
-  background-color: #f0f0f0;
-  color: #d63384;
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-family: monospace;
+/* 确保代码块有基础样式 */
+.markdown-content :deep(pre) {
+  /* padding: 16px; */
+  overflow: auto;
+  /* background: #f6f8fa; */
+  border-radius: 5px;
+  /* border-left: 3px solid #3a7bd5; */
+  margin: 1rem 0;
 }
 
-.markdown-body table {
-background-color: #438ded;
-  width: 100%;
-  border-collapse: collapse;
-  margin: 16px 0;
+
+.markdown-container {
+  padding: 1em;
+  font-family: 'Arial', sans-serif;
 }
 
-.markdown-body :deep(hr){
-  height: .1em !important;
-  background: linear-gradient(to right, #ec6238, #dbc3b8, #4879d3, #3e947f, #60e74e, #a9aa56, #969092)
+/* 代码块基础样式（与主题匹配） */
+.markdown-container pre {
+  margin: 1.5em 0;
+  padding: 1em;
+  border-radius: 8px;
+  background-color: #1e1e1e; /* 与agate主题的背景一致 */
+  overflow: auto; /* 水平滚动 */
+}
+
+.footer{
+  text-align: center;
 }
 </style>
