@@ -1,4 +1,29 @@
 <template>
+      <!-- <el-upload
+    v-model:file-list="fileList"
+    class="upload-demo"
+    :action="ossStore.host"
+    :on-preview="handlePreview"
+    :on-remove="handleRemove"
+    :before-remove="beforeRemove"
+    :limit="3"
+    :on-exceed="handleExceed"
+    :on-change="handleChange"
+  >
+
+    <el-button type="primary">Click to upload</el-button>
+    <template #tip>
+      <div class="el-upload__tip">
+        jpg/png files with a size less than 500KB.
+      </div>
+    </template>
+  </el-upload> -->
+  <form>
+      <div class="mb-3">
+        <label for="file" class="form-label">选择文件</label>
+        <input type="file" class="form-control" id="file" name="file" required @change="uploadToOss">
+      </div>
+    </form>
     <div>
         <el-button plain @click="openDialog('bounce')"> 发布 </el-button>
     </div>
@@ -62,7 +87,7 @@
         </div>
     </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, computed, watchEffect, reactive } from 'vue';
 import Vditor from 'vditor';
 import 'vditor/dist/index.css'
@@ -72,6 +97,8 @@ import { apiArticleAdd } from '../axios/articleAxios';
 import { useRouter, useRoute } from 'vue-router'
 import { apiArticleGet, apiArticleUpdate } from '../axios/articleAxios'
 import { useMenuStore } from '../store/menuStore';
+import { useOssStore, initOssStore, clearOssStore } from '../store/ossStore';
+import cuid from 'cuid'
 
 const dialogVisible = ref(false)
 const currentAnimation = ref('bounce')
@@ -84,6 +111,9 @@ const currentMsg = ref(null)
 const dialogTitle = ref(null)
 const editId = ref(null)
 const menuStore = useMenuStore()
+const ossStore = useOssStore()
+const visitPrefix = ref('https://huajieyu.oss-cn-hangzhou.aliyuncs.com/')
+const visitAbsolutePath = ref('')
 
 const buttonDetail = reactive({
     publish: {
@@ -168,6 +198,11 @@ onMounted(() => {
         clearArticleStore()
     }
 
+    // 初始化上传文件接口
+    if(!ossStore.isActive){
+        initOssStore()
+    }
+
   editor.value = new Vditor('vditor', {
     cdn: `${location.origin}${import.meta.env.BASE_URL}vditor`,
     height: 'calc(100vh - 60px)',
@@ -226,83 +261,9 @@ onMounted(() => {
             if (!files || files.length === 0) {
                 return;
             }
-            
-            const uploadPromises = [];
-            
-            Array.from(files).forEach(file => {
-                const statusId = Date.now() + Math.random();
-                const status = {
-                    id: statusId,
-                    filename: file.name,
-                    status: 'uploading',
-                    progress: 0,
-                    message: '准备上传...'
-                };
-                
-                uploadStatus.value.unshift(status);
-                
-                // 模拟上传过程
-                const totalSize = file.size;
-                let uploadedSize = 0;
-                
-                // 创建模拟进度更新
-                const progressInterval = setInterval(() => {
-                    if (uploadedSize < totalSize) {
-                        uploadedSize += totalSize / 10;
-                        const progress = Math.min(100, (uploadedSize / totalSize) * 100);
-                        
-                        const index = uploadStatus.value.findIndex(s => s.id === statusId);
-                        if (index !== -1) {
-                            uploadStatus.value[index].progress = progress;
-                            uploadStatus.value[index].message = `上传中... ${Math.round(progress)}%`;
-                        }
-                    } else {
-                        clearInterval(progressInterval);
-                    }
-                }, 300);
-                
-                // 模拟上传请求
-                const promise = new Promise((resolve) => {
-                    setTimeout(() => {
-                        clearInterval(progressInterval);
-                        
-                        // 模拟90%的成功率
-                        if (Math.random() > 0.1) {
-                            const index = uploadStatus.value.findIndex(s => s.id === statusId);
-                            if (index !== -1) {
-                                uploadStatus.value[index].status = 'success';
-                                uploadStatus.value[index].progress = 100;
-                                uploadStatus.value[index].message = '上传成功';
-                                uploadStatus.value[index].url = `https://example.com/images/${file.name}`;
-                                
-                                // 添加到已上传图片列表
-                                uploadedImages.value.unshift({
-                                    filename: file.name,
-                                    url: `https://example.com/images/${file.name}`,
-                                    size: file.size
-                                });
-                            }
-                            
-                            resolve(`https://example.com/images/${file.name}`);
-                        } else {
-                            const index = uploadStatus.value.findIndex(s => s.id === statusId);
-                            if (index !== -1) {
-                                uploadStatus.value[index].status = 'error';
-                                uploadStatus.value[index].message = '上传失败: 服务器错误';
-                            }
-                            resolve(null);
-                        }
-                    }, 2000);
-                });
-                
-                uploadPromises.push(promise);
-            });
-            
-            return Promise.all(uploadPromises).then(urls => {
-                return urls.filter(url => url !== null);
-            });
-        }
 
+            uploadToOss(files)
+        }
     }
   })
 })
@@ -325,6 +286,51 @@ const processResponse = (resp, notRequiresRefresh)=> {
     } else {
         alert(resp.data.msg)
     }
+}
+
+const uploadToOss = (files)=>{
+    let file = files[0]
+    const form = new FormData()
+    const ext = file.name.split('.').pop();
+    let objectName = ossStore.formData.key +  `${cuid()}.${ext}`
+    form.append('name',file.name);
+    form.append('policy', ossStore.formData.policy);
+    form.append('OSSAccessKeyId', ossStore.formData.OSSAccessKeyId);
+    form.append('success_action_status', '200');
+    form.append('signature', ossStore.formData.signature);
+    form.append('key', objectName);
+    form.append('file', file);
+    fetch(ossStore.host, {method: 'POST', body: form }).then(res=>{
+        console.log("文件已上传")
+    }).catch(err=>{
+        console.log("Err", err)
+    })
+
+    let result = '![](' + visitPrefix.value + objectName + ')'
+
+    console.log('返回结果', result)
+
+    setTimeout(()=>{
+        editor.value.insertValue(result);
+    }, 500)
+    
+    return result
+}
+
+function getTimeFromCuid(cuid) {
+  // 1. 提取时间戳部分：通常是第二个块，在第一个 '-' 之后（如果有的话）或固定位置。
+  // 但请注意，CUID2 格式可能略有不同。这里以经典 cuid 为例。
+  // 假设 cuid 格式为: cxxxxxxxxyyyyyyzzzzzzzzzz
+  // 我们取前缀 'c' 之后的 8 个字符（经典 cuid 时间戳长度）
+  const base36TimeStamp = cuid.substring(1, 9);
+
+  // 2. 将 Base36 字符串解析为整数（毫秒数）
+  const milliseconds = parseInt(base36TimeStamp, 36);
+
+  // 3. 创建一个 Date 对象
+  const generationDate = new Date(milliseconds);
+
+  return generationDate;
 }
 
 </script>
