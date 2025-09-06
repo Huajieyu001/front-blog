@@ -1,7 +1,7 @@
 <template>
     <div class="profile">
         <!-- <el-avatar :size="size" :src="circleUrl" @click="toManage()" /> -->
-        <el-avatar :size="size" :src="circleUrl" @click="toManage"/>
+        <el-avatar :size="size" :src="circleUrl" @click="toManage" />
         <br></br>
         <!-- <span>sddfs</span> -->
     </div>
@@ -9,7 +9,7 @@
 
 <script lang="ts" setup>
 import { reactive, toRefs, ref } from 'vue'
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
@@ -21,8 +21,8 @@ const state = reactive({
 
 const { circleUrl } = toRefs(state)
 
-const toManage = ()=>{
-    if(localStorage.getItem("huajieyu_blog_auth")){
+const toManage = () => {
+    if (localStorage.getItem("huajieyu_blog_auth")) {
         router.push({
             name: "Manage"
         })
@@ -33,7 +33,7 @@ const toManage = ()=>{
     }
 }
 
-const toGithub = ()=>{
+const toGithub = () => {
     window.open("https://github.com/Huajieyu001")
 }
 
@@ -41,7 +41,7 @@ const toGithub = ()=>{
 </script>
 
 <style scoped>
-.profile{
+.profile {
     border: #87c48c solid 0.5px;
     /* border: solid 1px; */
     /* border-radius: 20px; */

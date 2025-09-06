@@ -1,10 +1,10 @@
 <template>
     <!-- <button @click="func">func</button> -->
     <!-- <component :is="currentLayout"> -->
-        <!-- <router-view /> -->
+    <!-- <router-view /> -->
     <!-- </component> -->
-     <!-- <Home/> -->
-     <!-- <Elem/> -->
+    <!-- <Home/> -->
+    <!-- <Elem/> -->
     <router-view></router-view>
 </template>
 
@@ -21,32 +21,14 @@ const layoutComponents = {
     FullScreen
 }
 
-const currentLayout = computed(()=>{
+const currentLayout = computed(() => {
     let name = route.meta.layout
-    console.log("route.meta.layout = " + route.meta.layout)
     return layoutComponents[name]
 })
-
-// func(()=>{
-//     console.log(currentLayout)
-// })
 
 </script>
 
 <style scoped>
-/* .layout {
-    display: flex;
-    background-color: greenyellow;
-    border-radius: 24px;
-} */
-
-/* #app{
-    width: 100vw;
-    height: 100vh;
-} */
-
-
-
 aside {
     flex: 0 0 400px;
     background: gray;

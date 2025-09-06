@@ -1,29 +1,24 @@
 <template>
     <div class="back">
         <div class="form">
-            <el-form
-                :label-position="labelPosition"
-                label-width="auto"
-                ref="formRef"
-                :rules="rules"
-                :model="form"
-                style="max-width: 600px"
-            >
+            <el-form :label-position="labelPosition" label-width="auto" ref="formRef" :rules="rules" :model="form"
+                style="max-width: 600px">
                 <el-form-item label="邮箱" :label-position="itemLabelPosition" prop="email">
-                    <el-input v-model="form.email" clearable style="width: 240px;"/>
+                    <el-input v-model="form.email" clearable style="width: 240px;" />
                 </el-form-item>
                 <el-form-item label="验证码" :label-position="itemLabelPosition" prop="captcha">
-                    <el-input v-model="form.captcha" clearable style="width: 240px;" max-length="6"/>
+                    <el-input v-model="form.captcha" clearable style="width: 240px;" max-length="6" />
                     <el-button @click="getCode(formRef)" :disabled="captchaDisabled">{{ captchaText }}</el-button>
                 </el-form-item>
                 <el-form-item label="账号" :label-position="itemLabelPosition" prop="username">
-                    <el-input v-model="form.username" clearable style="width: 240px;"/>
+                    <el-input v-model="form.username" clearable style="width: 240px;" />
                 </el-form-item>
                 <el-form-item label="密码" :label-position="itemLabelPosition" prop="password">
-                    <el-input v-model="form.password" type="password" show-password clearable style="width: 240px;"/>
+                    <el-input v-model="form.password" type="password" show-password clearable style="width: 240px;" />
                 </el-form-item>
                 <el-form-item label="确认密码" :label-position="itemLabelPosition" prop="confirmPassword">
-                    <el-input v-model="form.confirmPassword" type="password" show-password clearable style="width: 240px;"/>
+                    <el-input v-model="form.confirmPassword" type="password" show-password clearable
+                        style="width: 240px;" />
                 </el-form-item>
                 <el-form-item class="center">
                     <el-button @click="toHome">返回首页</el-button>
@@ -35,7 +30,7 @@
         </div>
     </div>
 </template>
-  
+
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 
@@ -71,28 +66,27 @@ const signup = (formEl: FormInstance | undefined) => {
     })
 }
 
-const signupUseApi = async ()=>{
+const signupUseApi = async () => {
     captchaDisabled.value = true
-    const data = await apiSignup(form)
-    if(data.code == 200){
-        router.push('/')
+    const resp = await apiSignup(form)
+    if (resp.status == 200) {
+        router.push('/login')
     } else {
-        alert(data.msg)
+        alert(resp.data.msg)
     }
 }
 
-const getCode = (formEl: FormInstance | undefined)=> {
+const getCode = (formEl: FormInstance | undefined) => {
     if (!formEl) return
-    console.log('getCode invoked')
     formEl.validateField('email', (valid) => {
-        if(valid){
+        if (valid) {
             startCountDown()
-            apiGetCode({email: form.email})
+            apiGetCode({ email: form.email })
         }
     })
 }
 
-const startCountDown = ()=>{
+const startCountDown = () => {
     countDown.value = 60
     captchaDisabled.value = true
 
@@ -102,15 +96,15 @@ const startCountDown = ()=>{
         countDown.value--
         updateButtonText()
 
-        if(countDown.value <= 0){
+        if (countDown.value <= 0) {
             clearInterval(countdownInterval)
             captchaDisabled.value = false
         }
     }, 1000);
 }
 
-const updateButtonText = ()=>{
-    if(countDown.value > 0){
+const updateButtonText = () => {
+    if (countDown.value > 0) {
         captchaText.value = '重新获取' + countDown.value + 'S'
     } else {
         captchaText.value = '获取验证码'
@@ -119,82 +113,85 @@ const updateButtonText = ()=>{
 }
 
 
-const toHome = ()=>{
+const toHome = () => {
     router.push('/')
 }
 
-const toLogin = ()=>{
+const toLogin = () => {
     router.push('/login')
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  formEl.resetFields()
+    if (!formEl) return
+    formEl.resetFields()
 }
 
 const checkEmail = (rule: any, value: any, callback: any) => {
-    if(!value){
+    if (!value) {
         callback(new Error('Please input email'))
     }
-    if(!REGEX.emailRegex.test(value)){
+    if (!REGEX.emailRegex.test(value)) {
         callback(new Error('请输入正确格式的邮箱'))
     }
     callback()
 }
 const checkCaptcha = (rule: any, value: any, callback: any) => {
-    if(!value){
+    if (!value) {
         callback(new Error('Please input captcha'))
     }
-    if(!REGEX.captchaRegex.test(value)){
+    if (!REGEX.captchaRegex.test(value)) {
         callback(new Error('请输入正确格式的验证码'))
     }
     callback()
 }
 const checkAccount = (rule: any, value: any, callback: any) => {
-    if(!value){
+    if (!value) {
         callback(new Error('Please input username'))
     }
-    if(!REGEX.accountRegex.test(value)){
+    if (!REGEX.accountRegex.test(value)) {
         callback(new Error('账号只能包含字母，数字，“_”和“-”'))
     }
     callback()
 }
 const checkPassword = (rule: any, value: any, callback: any) => {
-    if(!value){
+    if (!value) {
         callback(new Error('Please input password'))
     }
     callback()
 }
 const checkConfirmPassword = (rule: any, value: any, callback: any) => {
-    if(!value){
+    if (!value) {
         callback(new Error('Please input confirmPassword'))
     }
-    if(value !== form.password){
+    if (value !== form.password) {
         callback(new Error('密码不一致'))
     }
     callback()
 }
 
 const rules = reactive<FormRules<typeof ruleform>>({
-    email: [{validator: checkEmail, trigger: 'change'}],
-    captcha: [{validator: checkCaptcha, trigger: 'change'}],
-    username: [{validator: checkAccount, trigger: 'change'}],
-    password: [{validator: checkPassword, trigger: 'change'}],
-    confirmPassword: [{validator: checkConfirmPassword, trigger: 'change'}]
+    email: [{ validator: checkEmail, trigger: 'change' }],
+    captcha: [{ validator: checkCaptcha, trigger: 'change' }],
+    username: [{ validator: checkAccount, trigger: 'change' }],
+    password: [{ validator: checkPassword, trigger: 'change' }],
+    confirmPassword: [{ validator: checkConfirmPassword, trigger: 'change' }]
 })
 
 </script>
 
 <style>
-.back{
+.back {
     /* background-color: aquamarine; */
     display: flex;
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
+    justify-content: center;
+    /* 水平居中 */
+    align-items: center;
+    /* 垂直居中 */
     height: 90vh;
     width: 90vw;
 }
-.form{
+
+.form {
     display: flex;
     justify-content: center;
     align-items: center;

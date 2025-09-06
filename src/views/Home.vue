@@ -24,40 +24,15 @@
 </template>
 
 <script setup>
-// import { onMounted, reactive } from 'vue'
-// import Main from '../components/Main.vue'
-// import Footer from '../components/Footer.vue'
-// import Aside from '../components/Aside.vue'
-// import { useHomeStore } from '../store/homeStore'
-// import { useMenuStore } from '../store/menuStore'
-// import { apiMenuList } from '../axios/menuAxios'
-// import TopMenu from '../components/TopMenu.vue'
+// import { onMounted } from 'vue';
 
-// const homeStore = useHomeStore()
-// const menuStore = useMenuStore()
-
-// const initMenu = async ()=>{
-//     const data = await apiMenuList()
-//     menuStore.menus = data
-//     menuStore.currentMenuId = data[0].id
-// }
-
-// onMounted(()=>{
-//     initMenu()
+// onMounted(() => {
+//     location.reload()
 // })
 </script>
 
 <style scoped>
-
-/* .aside-panel{
-    max-width: 20vw;
-} */
-
-/* .container{
-    margin-top: 30px;
-} */
-
-.layout{
+.layout {
     display: flex;
     background-color: #fef9f4;
     border: solid 0.5px skyblue;
@@ -76,6 +51,7 @@ aside {
     height: 98vh;
     /* margin-right: 20px; */
 }
+
 main {
     flex: 1;
     background: #fef9f4;
@@ -86,22 +62,25 @@ main {
     transition: transform 0.3s ease;
 }
 
-.left-chunk{
+.left-chunk {
     height: 100%;
 }
 
-.right-chunk{
+.right-chunk {
     width: 100%;
     height: 100%;
     /* justify-content: center;
     align-items: center; */
     /* position: relative; */
-    display: flex;            /* 关键：使用 flex 布局 */
-    flex-direction: column;   /* 关键：垂直方向排列 */
-    justify-content: space-between; /* 关键：内容在两端分布 */
+    display: flex;
+    /* 关键：使用 flex 布局 */
+    flex-direction: column;
+    /* 关键：垂直方向排列 */
+    justify-content: space-between;
+    /* 关键：内容在两端分布 */
 }
 
-.blog-foot{
+.blog-foot {
     text-align: center;
 }
 </style>

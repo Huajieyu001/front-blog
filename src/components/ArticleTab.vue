@@ -1,20 +1,20 @@
 <template>
     <div class="article-item" @click="read()">
-      <div v-if="article.featured" class="featured-indicator">精选文章</div>
-      <div class="article-header">
-        <div class="category-tag">{{ article.menuName }}</div>
-        <div class="article-date">{{ article.createTime }}</div>
-      </div>
-      <h2 class="article-title">{{ article.title }}</h2>
-      <p class="article-excerpt">{{ article.summary }}</p>
-      <div class="divider"></div>
-      <div class="article-footer">
-        <div class="article-meta">
-          <div class="meta-item">
-            <i class="far fa-clock"></i>
-            <span>{{ article.readTime }}</span>
-          </div>
-          <!-- <div class="meta-item">
+        <div v-if="article.featured" class="featured-indicator">精选文章</div>
+        <div class="article-header">
+            <div class="category-tag">{{ article.menuName }}</div>
+            <div class="article-date">{{ article.createTime }}</div>
+        </div>
+        <h2 class="article-title">{{ article.title }}</h2>
+        <p class="article-excerpt">{{ article.summary }}</p>
+        <div class="divider"></div>
+        <div class="article-footer">
+            <div class="article-meta">
+                <div class="meta-item">
+                    <i class="far fa-clock"></i>
+                    <span>{{ article.readTime }}</span>
+                </div>
+                <!-- <div class="meta-item">
             <i class="far fa-comment"></i>
             <span>{{ article.comments }}条评论</span>
           </div>
@@ -22,11 +22,11 @@
             <i class="far fa-heart"></i>
             <span>{{ article.likes }}次点赞</span>
           </div> -->
+            </div>
         </div>
-      </div>
     </div>
-  </template>
-  
+</template>
+
 <script setup>
 import { defineProps, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router'
@@ -36,21 +36,20 @@ const props = defineProps({
 })
 const router = useRouter()
 
-onMounted(()=>{
+onMounted(() => {
 })
 
-const read = ()=>{
+const read = () => {
     router.push({
-         name: 'ArticleDetail',
-         query:{
+        name: 'ArticleDetail',
+        query: {
             id: props.article.id
-         }
+        }
     })
 }
 </script>
-  
-<style scoped>
 
+<style scoped>
 * {
     margin: 0;
     padding: 0;
@@ -112,7 +111,8 @@ h1 {
 }
 
 .article-item:hover {
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
+    background-color: #fff;
     transform: translateX(10px);
 }
 
@@ -141,14 +141,15 @@ h1 {
 .article-title {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #7c9ab9;
+    color: #000000a8;
+    /* color: #7c9ab9; */
     margin-bottom: 15px;
     line-height: 1.3;
     transition: color 0.3s ease;
 }
 
 .article-item:hover .article-title {
-    color: #3498db;
+    color: rgb(235, 158, 135);
 }
 
 .article-excerpt {
@@ -209,39 +210,39 @@ h1 {
     .container {
         border-radius: 0;
     }
-    
+
     header {
         padding: 30px 20px;
     }
-    
+
     h1 {
         font-size: 2.2rem;
     }
-    
+
     .articles-list {
         padding: 15px;
     }
-    
+
     .article-item {
         padding: 20px 15px;
     }
-    
+
     .article-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
-    
+
     .article-title {
         font-size: 1.5rem;
     }
-    
+
     .article-footer {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
     }
-    
+
     .article-meta {
         width: 100%;
         justify-content: space-between;

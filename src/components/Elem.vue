@@ -1,9 +1,6 @@
 <template>
-  <div
-    style="height: 250px; box-shadow: var(--el-border-color-light) 0px 0px 10px"
-  >
-    <el-splitter
-    >
+  <div style="height: 250px; box-shadow: var(--el-border-color-light) 0px 0px 10px">
+    <el-splitter>
       <el-splitter-panel>
         <div class="demo-panel">1</div>
       </el-splitter-panel>
@@ -22,17 +19,6 @@ import { ref } from 'vue'
 
 const size = ref(100)
 
-// const handleResizeStart = (index: number, sizes: number[]) => {
-//   console.log('resizeStart', index, sizes)
-// }
-
-// const handleResize = (index: number, sizes: number[]) => {
-//   console.log('resize', index, sizes)
-// }
-
-// const handleResizeEnd = (index: number, sizes: number[]) => {
-//   console.log('resizeEnd', index, sizes)
-// }
 </script>
 
 <style scoped>

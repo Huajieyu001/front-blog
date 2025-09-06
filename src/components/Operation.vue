@@ -1,12 +1,7 @@
 <template>
   <div class="mb-4">
-    <el-button
-      v-for="button in buttons"
-      :key="button.text"
-      :type="button.type"
-      :color="button.color"
-      @click="toWriteArticle"
-    >
+    <el-button v-for="button in buttons" :key="button.text" :type="button.type" :color="button.color"
+        @click="toWriteArticle">
       {{ button.text }}
     </el-button>
   </div>
@@ -25,7 +20,7 @@ const buttons = reactive([
   }
 ])
 
-const toWriteArticle = ()=>{
+const toWriteArticle = () => {
   router.push({
     name: "Article"
   })
@@ -34,7 +29,7 @@ const toWriteArticle = ()=>{
 </script>
 
 <style>
-.mb-4{
+.mb-4 {
   margin-left: 20px;
 }
 

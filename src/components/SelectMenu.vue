@@ -1,11 +1,6 @@
 <template>
-    <el-select v-model="menuStore.currentMenuId" placeholder="Select" style="width: 240px">
-        <el-option
-        v-for="item in menuList"
-        :key="item.id"
-        :label="item.name"
-        :value="item.id"
-        />
+  <el-select v-model="menuStore.currentMenuId" placeholder="Select" style="width: 240px">
+    <el-option v-for="item in menuList" :key="item.id" :label="item.name" :value="item.id" />
   </el-select>
 </template>
 
@@ -18,35 +13,35 @@ const menuStore = useMenuStore()
 
 const menuList = reactive([])
 
-onMounted(()=>{
+onMounted(() => {
   init()
 })
 
-const init = async ()=>{
+const init = async () => {
   const resp = await apiMenuList()
-  Object.assign(menuList, {...resp.data.data})
-  menuList.unshift({id: null, name: ''})
+  Object.assign(menuList, { ...resp.data.data })
+  menuList.unshift({ id: null, name: '' })
   processResponse(resp, true)
 }
 
-watchEffect(()=>{
-  // articleStore.menuId = selectedMenuId.value
+watchEffect(() => {
 })
 
-const processResponse = (resp, notRequiresRefresh)=> {
-    if(resp.status == 401){
-        router.push("/login")
-        return
+const processResponse = (resp, notRequiresRefresh) => {
+  if (resp.status == 401) {
+    ElMessage.error("认证失败")
+    localStorage.removeItem("huajieyu_blog_auth")
+    router.push("/login")
+    return
+  }
+  if (resp.data.code == 200) {
+    if (!notRequiresRefresh) {
+      location.reload()
     }
-    if (resp.data.code == 200){
-        if(!notRequiresRefresh){
-            location.reload()
-        }
-    } else {
-        alert(resp.data.msg)
-    }
+  } else {
+    ElMessage.error(resp.data.msg)
+  }
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
