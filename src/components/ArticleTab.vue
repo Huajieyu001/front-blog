@@ -112,7 +112,8 @@ h1 {
 }
 
 .article-item:hover {
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
+    background-color: #fff;
     transform: translateX(10px);
 }
 
@@ -141,14 +142,15 @@ h1 {
 .article-title {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #7c9ab9;
+    color: #000000a8;
+    /* color: #7c9ab9; */
     margin-bottom: 15px;
     line-height: 1.3;
     transition: color 0.3s ease;
 }
 
 .article-item:hover .article-title {
-    color: #3498db;
+    color: rgb(235, 158, 135);
 }
 
 .article-excerpt {

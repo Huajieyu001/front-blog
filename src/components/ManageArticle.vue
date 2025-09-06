@@ -73,7 +73,6 @@ onMounted(()=>{
 
 const checkName = (rule: any, value: string, callback: any)=>{
     if(!value){
-        console.log('name = ', value)
         callback(new Error('请输入菜单名'))
     }
     callback()
@@ -170,6 +169,9 @@ const confirm = ()=>{
 const useApiDeleteArticle = async ()=> {
     const resp = await apiArticleDelete(editId.value)
     processResponse(resp)
+    if(resp.data.code == 200){
+        ElMessage.success(resp.data.msg)
+    }
 }
 
 watchEffect(()=>{
@@ -178,16 +180,16 @@ watchEffect(()=>{
 
 const processResponse = (resp, notRequiresRefresh)=> {
     if(resp.status == 401){
+        ElMessage.error("认证失败")
         router.push("/login")
         return
     }
-    console.log("//////////////", resp.data)
     if (resp.data.code == 200){
         if(!notRequiresRefresh){
             location.reload()
         }
     } else {
-        alert(resp.data.msg)
+        ElMessage.error(resp.data.msg)
     }
 }
 </script>

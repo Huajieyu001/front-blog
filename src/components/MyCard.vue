@@ -36,7 +36,6 @@
 import { reactive, onMounted } from 'vue'
 
 onMounted(()=>{
-    console.log("MyCard loaded")
 })
 
 const detail = reactive({

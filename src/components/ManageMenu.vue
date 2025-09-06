@@ -82,7 +82,6 @@ onMounted(()=>{
 
 const checkName = (rule: any, value: string, callback: any)=>{
     if(!value){
-        console.log('name = ', value)
         callback(new Error('请输入菜单名'))
     }
     callback()
@@ -179,7 +178,6 @@ const useApiUpdateMenu = async() => {
 }
 
 const useApiDeleteMenu = async()=>{
-    console.log('useApiAddMenu invoked')
     const resp = await apiMenuDelete({id: editMenuId.value})
     processResponse(resp)
 }

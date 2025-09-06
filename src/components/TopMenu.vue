@@ -21,15 +21,6 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-// 菜单项数据
-// const menuItems = ref([
-//   { label: '我的文章', link: '/' },
-//   // { label: '博客推荐', link: '/blogRed' },
-//   { label: '网站推荐', link: '/webRed' },
-//   { label: '工具推荐', link: '/toolRed' },
-//   { label: '其他', link: '/other' },
-// ]);
-
 const menuItems = ref([
   { label: '我的文章', link: '/' },
   // { label: '博客推荐', link: '/blogRed' },
@@ -40,12 +31,6 @@ const menuItems = ref([
 
 const currentLabel = ref('我的文章')
 
-const isSelected = (item)=>{
-  console.log('item.label:', item.label, typeof item.label);
-  console.log('currentLabel:', currentLabel, typeof currentLabel);
-  console.log('是否相等:', item.label == currentLabel);
-  return item.label == currentLabel
-}
 
 const toTopMenu = (item) => {
   currentLabel.value = item.label

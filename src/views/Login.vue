@@ -45,12 +45,12 @@ const form = reactive({
 const errMsg = ref('')
 
 const login = async ()=> {
-    const data = await apiLogin(form)
-    if (data.code == 200){
-        localStorage.setItem('huajieyu_blog_auth', data.data)
+    const resp = await apiLogin(form)
+    if (resp.status == 200 && resp.data.code == 200){
+        localStorage.setItem('huajieyu_blog_auth', resp.data.data)
         toHome()
     } else {
-        errMsg.value = data.msg
+        errMsg.value = resp.msg
     }
 }
 

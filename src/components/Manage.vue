@@ -28,10 +28,6 @@ const menuItems = reactive([
     label: '返回首页',
     link: '/'
   },
-  // {
-  //   label: '用户管理',
-  //   link: '/manage/user'
-  // },
   {
     label: '菜单管理',
     link: '/manage/menu'
@@ -40,10 +36,6 @@ const menuItems = reactive([
     label: '文章管理',
     link: '/manage/article'
   },
-  // {
-  //   label: '推荐管理',
-  //   link: '/manage/link'
-  // }
 ])
 
 const changeView = (link)=>{
@@ -60,7 +52,6 @@ const changeView = (link)=>{
 .layout{
     display: flex;
     background-color: #fef9f4;
-    /* border-radius: 24px;  */
     border: solid 0.5px skyblue;
 }
 </style>

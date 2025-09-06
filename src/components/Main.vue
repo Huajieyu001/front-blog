@@ -52,6 +52,7 @@ onMounted(()=>{
     initList(1, 10)
 })
 
+
 const initList = async(pageNum, pageSize, menuId)=>{
     const resp = await apiArticleList(menuId, pageNum, pageSize)
     Object.assign(article, {...resp.data.data})

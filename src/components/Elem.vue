@@ -22,17 +22,6 @@ import { ref } from 'vue'
 
 const size = ref(100)
 
-// const handleResizeStart = (index: number, sizes: number[]) => {
-//   console.log('resizeStart', index, sizes)
-// }
-
-// const handleResize = (index: number, sizes: number[]) => {
-//   console.log('resize', index, sizes)
-// }
-
-// const handleResizeEnd = (index: number, sizes: number[]) => {
-//   console.log('resizeEnd', index, sizes)
-// }
 </script>
 
 <style scoped>

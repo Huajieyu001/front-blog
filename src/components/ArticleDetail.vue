@@ -41,17 +41,6 @@ const parsedContent = ref()
 const initArticle = async ()=>{
   const resp = await apiArticleGet(route.query.id)
   Object.assign(data, {...resp.data.data})
-  // if(data.content){
-  //   console.log("JIEJIEJIEJIEJIE")
-  //   parsedContent.value = parseMarkdown(data.content)
-  //   console.log("JIEJIEJIEJIEJIE")
-  //   // console.log(parsedHtml)
-  //   parsedContent.value = parsedContent.value.replaceAll('\n', '<br/>')
-  //   console.log("JIEJIEJIEJIEJIE")
-  //   // data.content = ref(DOMPurify.sanitize(parsedHtml.value)).value
-  // }
-
-  // lineNumbers(hljs)
   nextTick(() => {
     addLineNumbers('pre code')
   });
@@ -64,7 +53,6 @@ onMounted(()=>{
 
 watchEffect(()=>{
   parsedContent.value = parseMarkdown(data.content || '');
-  // parsedContent.value = parsedContent.value.replaceAll('\n\n', '\n<br/>')
 })
 </script>
 

@@ -1,29 +1,4 @@
 <template>
-      <!-- <el-upload
-    v-model:file-list="fileList"
-    class="upload-demo"
-    :action="ossStore.host"
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    :before-remove="beforeRemove"
-    :limit="3"
-    :on-exceed="handleExceed"
-    :on-change="handleChange"
-  >
-
-    <el-button type="primary">Click to upload</el-button>
-    <template #tip>
-      <div class="el-upload__tip">
-        jpg/png files with a size less than 500KB.
-      </div>
-    </template>
-  </el-upload> -->
-  <form>
-      <div class="mb-3">
-        <label for="file" class="form-label">选择文件</label>
-        <input type="file" class="form-control" id="file" name="file" required @change="uploadToOss">
-      </div>
-    </form>
     <div>
         <el-button plain @click="openDialog('bounce')"> 发布 </el-button>
     </div>
@@ -112,8 +87,7 @@ const dialogTitle = ref(null)
 const editId = ref(null)
 const menuStore = useMenuStore()
 const ossStore = useOssStore()
-const visitPrefix = ref('https://huajieyu.oss-cn-hangzhou.aliyuncs.com/')
-const visitAbsolutePath = ref('')
+const visitPrefix = ref('http://static.huajieyu001.top/')
 
 const buttonDetail = reactive({
     publish: {
@@ -289,6 +263,10 @@ const processResponse = (resp, notRequiresRefresh)=> {
 }
 
 const uploadToOss = (files)=>{
+    if(!ossStore.isActive){
+        ElMessage.error('上传接口报错，请刷新重试')
+        return
+    }
     let file = files[0]
     const form = new FormData()
     const ext = file.name.split('.').pop();
@@ -307,8 +285,6 @@ const uploadToOss = (files)=>{
     })
 
     let result = '![](' + visitPrefix.value + objectName + ')'
-
-    console.log('返回结果', result)
 
     setTimeout(()=>{
         editor.value.insertValue(result);

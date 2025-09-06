@@ -83,7 +83,6 @@ const signupUseApi = async ()=>{
 
 const getCode = (formEl: FormInstance | undefined)=> {
     if (!formEl) return
-    console.log('getCode invoked')
     formEl.validateField('email', (valid) => {
         if(valid){
             startCountDown()

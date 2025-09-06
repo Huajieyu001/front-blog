@@ -36,7 +36,6 @@ const initOssStore = async ()=>{
     if(resp.status == 200){
         const ossStore = useOssStore()
         const data = resp.data
-        console.log(data)
         ossStore.host = data.host
         ossStore.formData.policy = data.policy
         ossStore.formData.OSSAccessKeyId = data.ossAccessKeyId
