@@ -1,6 +1,6 @@
 <template>
   <el-tabs type="border-card">
-    <el-tab-pane v-for="item in categories" :label="item">{{item}}</el-tab-pane>
+    <el-tab-pane v-for="item in categories" :label="item">{{ item }}</el-tab-pane>
   </el-tabs>
 </template>
 

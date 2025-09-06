@@ -8,8 +8,8 @@ import { onMounted } from 'vue'
 
 const router = useRouter()
 
-onMounted(()=>{
-    setTimeout(()=>{
+onMounted(() => {
+    setTimeout(() => {
         router.push({
             path: "/"
         })
@@ -18,5 +18,4 @@ onMounted(()=>{
 
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

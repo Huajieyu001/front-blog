@@ -35,11 +35,11 @@
 <script setup>
 import { reactive, onMounted } from 'vue'
 
-onMounted(()=>{
+onMounted(() => {
 })
 
 const detail = reactive({
-    data:[
+    data: [
         {
             name: '',
             list: []
@@ -54,23 +54,25 @@ const detail = reactive({
 
 <style scoped>
 .el-row {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
+
 .el-row:last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
+
 .el-col {
-  border-radius: 4px;
-  margin-bottom: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
 }
 
 .grid-content {
-  border-radius: 0px;
-  padding: 5px;
-  border: solid gray 0.5px;
-  min-height: 36px;
-  background-color: rgb(247, 238, 217);
-  width: 260px;
-  height: 140px;
+    border-radius: 0px;
+    padding: 5px;
+    border: solid gray 0.5px;
+    min-height: 36px;
+    background-color: rgb(247, 238, 217);
+    width: 260px;
+    height: 140px;
 }
 </style>

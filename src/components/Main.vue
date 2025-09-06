@@ -1,8 +1,8 @@
 <template>
     <!-- <Operation></Operation> -->
-     <div style="margin: 20px;">
+    <div style="margin: 20px;">
         筛选 &nbsp;<SelectMenu></SelectMenu>
-     </div>
+    </div>
     <!-- <Summary v-if="article.records && article.records.length > 0"
             v-for="item in article.records" 
             :key="item"
@@ -10,21 +10,14 @@
         <template v-slot:title>
             <div class="article-list-title">标题：{{ item.title }}</div>
         </template>
-        <template v-slot:summary>
+<template v-slot:summary>
             概述：{{ item.summary }}
         </template>
-    </Summary> -->
+</Summary> -->
     <ArticleTab v-for="item in article.records" :article="item" :key="item.id"></ArticleTab>
     <div class="record left-distance">共有{{ article.total }}条记录</div>
-    <el-pagination
-        :page-size="pageSize"
-        :pager-count="7"
-        layout="prev, pager, next, jumper, ->"
-        :total="article.total"
-        v-model:current-page="pageNum"
-        :background="back"
-        class="pageHelper left-distance"
-    /> 
+    <el-pagination :page-size="pageSize" :pager-count="7" layout="prev, pager, next, jumper, ->" :total="article.total"
+        v-model:current-page="pageNum" :background="back" class="pageHelper left-distance" />
 </template>
 
 <script setup>
@@ -48,17 +41,17 @@ const article = reactive({
     records: []
 })
 
-onMounted(()=>{
+onMounted(() => {
     initList(1, 10)
 })
 
 
-const initList = async(pageNum, pageSize, menuId)=>{
+const initList = async (pageNum, pageSize, menuId) => {
     const resp = await apiArticleList(menuId, pageNum, pageSize)
-    Object.assign(article, {...resp.data.data})
+    Object.assign(article, { ...resp.data.data })
 }
 
-const readArticle = (id)=>{
+const readArticle = (id) => {
     router.push({
         name: 'ArticleDetail',
         query: {
@@ -67,23 +60,23 @@ const readArticle = (id)=>{
     })
 }
 
-watchEffect(()=>{
+watchEffect(() => {
     initList(pageNum.value, pageSize.value, menuStore.currentMenuId)
 })
 
 </script>
 
 <style scoped>
-.article-list-title{
+.article-list-title {
     font-weight: 800;
 }
 
-.record{
+.record {
     margin-top: 50px;
     font-size: large;
 }
 
-.left-distance{
+.left-distance {
     margin-left: 20px;
 }
 </style>

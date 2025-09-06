@@ -1,10 +1,10 @@
 <template>
     <!-- <button @click="func">func</button> -->
     <!-- <component :is="currentLayout"> -->
-        <!-- <router-view /> -->
+    <!-- <router-view /> -->
     <!-- </component> -->
-     <!-- <Home/> -->
-     <!-- <Elem/> -->
+    <!-- <Home/> -->
+    <!-- <Elem/> -->
     <router-view></router-view>
 </template>
 
@@ -21,7 +21,7 @@ const layoutComponents = {
     FullScreen
 }
 
-const currentLayout = computed(()=>{
+const currentLayout = computed(() => {
     let name = route.meta.layout
     return layoutComponents[name]
 })

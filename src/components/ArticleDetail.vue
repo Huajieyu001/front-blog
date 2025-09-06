@@ -1,25 +1,24 @@
 <template>
-      <!-- <el-button type="primary">Offset top 120px</el-button> -->
-      <router-link :to="'/'" class="go-home">返回首页</router-link>
-    <div>
-      <div class="article-title">
-        {{ data.title }}
-      </div>
-      <p class="summary">
-        {{ data.summary }}
-      </p>
+  <router-link :to="'/'" class="go-home">返回首页</router-link>
+  <div>
+    <div class="article-title">
+      {{ data.title }}
     </div>
-    <div class="markdown-content" v-html="parsedContent"></div>
-    <div style="margin-top: 20px; margin-bottom: 50px">
-      本文章<span v-if="data.createBy">由&nbsp;{{ data.createBy }}&nbsp;</span>发布于&nbsp;{{ data.createTime }}
-      <div v-if="data.updateTime">最后更新于&nbsp;{{ data.updateTime }}</div>
-    </div>
-    <el-backtop :right="100" :bottom="100" />
-    <Footer class="footer"></Footer>
+    <p class="summary">
+      {{ data.summary }}
+    </p>
+  </div>
+  <div class="markdown-content" v-html="parsedContent"></div>
+  <div style="margin-top: 20px; margin-bottom: 50px">
+    本文章<span v-if="data.createBy">由&nbsp;{{ data.createBy }}&nbsp;</span>发布于&nbsp;{{ data.createTime }}
+    <div v-if="data.updateTime">最后更新于&nbsp;{{ data.updateTime }}</div>
+  </div>
+  <el-backtop :right="100" :bottom="100" />
+  <Footer class="footer"></Footer>
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, watchEffect, nextTick  } from 'vue';
+import { ref, onMounted, reactive, watchEffect, nextTick } from 'vue';
 import { parseMarkdown } from '../utils/markdownParser';
 import { apiArticleGet } from '../axios/articleAxios'
 import { useRoute } from 'vue-router';
@@ -38,31 +37,31 @@ const data = reactive({
 })
 const parsedContent = ref()
 
-const initArticle = async ()=>{
+const initArticle = async () => {
   const resp = await apiArticleGet(route.query.id)
-  Object.assign(data, {...resp.data.data})
+  Object.assign(data, { ...resp.data.data })
   nextTick(() => {
     addLineNumbers('pre code')
   });
 }
 
-onMounted(()=>{
+onMounted(() => {
   initArticle()
 
 })
 
-watchEffect(()=>{
+watchEffect(() => {
   parsedContent.value = parseMarkdown(data.content || '');
 })
 </script>
 
 <style scoped>
-.article-title{
+.article-title {
   font-size: 40px;
   font-weight: 600;
 }
 
-.summary{
+.summary {
   font-size: x-large;
   color: #00000076;
   background-color: #ebeeef;
@@ -74,29 +73,29 @@ watchEffect(()=>{
 
 
 .go-home {
-    font-size: xx-large;
-    color: #64aad8;
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    transition: all 0.3s ease;
+  font-size: xx-large;
+  color: #64aad8;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.3s ease;
 }
 
 .go-home {
-    margin-left: 5px;
-    transition: transform 0.3s ease;
+  margin-left: 5px;
+  transition: transform 0.3s ease;
 }
 
 .go-home:hover {
-    color: #2980b9;
+  color: #2980b9;
 }
 
 .go-home:hover i {
-    transform: translateX(3px);
+  transform: translateX(3px);
 }
 
-.markdown-content{
+.markdown-content {
   padding: 16px;
   border: solid 0.3px #00000076;
 }
@@ -122,11 +121,13 @@ watchEffect(()=>{
   margin: 1.5em 0;
   padding: 1em;
   border-radius: 8px;
-  background-color: #1e1e1e; /* 与agate主题的背景一致 */
-  overflow: auto; /* 水平滚动 */
+  background-color: #1e1e1e;
+  /* 与agate主题的背景一致 */
+  overflow: auto;
+  /* 水平滚动 */
 }
 
-.footer{
+.footer {
   text-align: center;
 }
 </style>

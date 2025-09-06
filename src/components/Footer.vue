@@ -12,11 +12,11 @@
 
 <script setup>
 
-const to = (id)=>{
-    if(id == 1){
+const to = (id) => {
+    if (id == 1) {
         window.open("https://github.com/Huajieyu001")
     }
-    else if( id == 2){
+    else if (id == 2) {
         window.open("https://beian.mps.gov.cn/#/query/webSearch")
     }
 }
@@ -32,9 +32,7 @@ footer {
     margin-top: 10px;
 }
 
-.beian:hover{
+.beian:hover {
     color: blue;
 }
-
-
 </style>

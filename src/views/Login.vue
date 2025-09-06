@@ -1,18 +1,13 @@
 <template>
     <div class="back">
         <div class="form">
-            <el-form
-                :label-position="labelPosition"
-                label-width="auto"
-                :model="form"
-                :rules="rules"
-                style="max-width: 600px;"
-            >
+            <el-form :label-position="labelPosition" label-width="auto" :model="form" :rules="rules"
+                style="max-width: 600px;">
                 <el-form-item label="账号" :label-position="itemLabelPosition" prop="username">
-                    <el-input v-model="form.username" clearable style="width: 240px;"/>
+                    <el-input v-model="form.username" clearable style="width: 240px;" />
                 </el-form-item>
                 <el-form-item label="密码" :label-position="itemLabelPosition">
-                    <el-input v-model="form.password" type="password" show-password clearable style="width: 240px;"/>
+                    <el-input v-model="form.password" type="password" show-password clearable style="width: 240px;" />
                 </el-form-item>
                 <el-form-item class="center">
                     <el-button @click="toHome">返回首页</el-button>
@@ -26,7 +21,7 @@
         </div>
     </div>
 </template>
-  
+
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 
@@ -44,9 +39,9 @@ const form = reactive({
 })
 const errMsg = ref('')
 
-const login = async ()=> {
+const login = async () => {
     const resp = await apiLogin(form)
-    if (resp.status == 200 && resp.data.code == 200){
+    if (resp.status == 200 && resp.data.code == 200) {
         localStorage.setItem('huajieyu_blog_auth', resp.data.data)
         toHome()
     } else {
@@ -54,25 +49,25 @@ const login = async ()=> {
     }
 }
 
-const toHome = ()=>{
+const toHome = () => {
     router.push('/')
 }
 
-const toSignup = ()=>{
+const toSignup = () => {
     router.push('/signup')
 }
 
 const checkAccount = (rule: any, value: String, callback: any) => {
-    if(!value){
+    if (!value) {
         callback(new Error('Please input username'))
     }
-    if(!REGEX.accountRegex.test(value)){
+    if (!REGEX.accountRegex.test(value)) {
         callback(new Error('请输入正确格式的账号'))
     }
 }
 
 const rules = reactive<FormRules<typeof ruleform>>({
-    username: [{validator: checkAccount, trigger: 'blur'}]
+    username: [{ validator: checkAccount, trigger: 'blur' }]
 })
 </script>
 
@@ -85,7 +80,7 @@ const rules = reactive<FormRules<typeof ruleform>>({
     width: 100%;
     background-color: rgb(201, 214, 193);
 } */
-.form{
+.form {
     display: flex;
     justify-content: center;
     align-items: center;

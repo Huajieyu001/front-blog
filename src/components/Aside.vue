@@ -12,7 +12,7 @@ import Menu from './Menu.vue';
 
 </script>
 <style>
-.aside{
+.aside {
     /* background-color: rgb(15, 35, 43); */
     /* background-color: rgb(162, 218, 241); */
     background-color: rgb(235, 238, 201);

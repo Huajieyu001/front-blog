@@ -7,12 +7,11 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const add = ()=>{
+const add = () => {
     router.push({
         name: 'Article'
     })
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

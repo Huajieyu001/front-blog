@@ -8,8 +8,6 @@
 
 </script>
 <style scoped>
-
-
 .article-item {
     padding: 30px;
     border-bottom: 1px solid #eaeaea;
@@ -33,5 +31,4 @@
     align-items: center;
     margin-bottom: 15px;
 }
-
 </style>

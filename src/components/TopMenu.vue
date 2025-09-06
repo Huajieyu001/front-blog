@@ -8,10 +8,18 @@
   </nav> -->
 
   <el-row :gutter="20">
-    <el-col :span="6"><div class="grid-content ep-bg-purple" /></el-col>
-    <el-col :span="6"><div class="grid-content ep-bg-purple" /></el-col>
-    <el-col :span="6"><div class="grid-content ep-bg-purple" /></el-col>
-    <el-col :span="6"><div class="grid-content ep-bg-purple" /></el-col>
+    <el-col :span="6">
+      <div class="grid-content ep-bg-purple" />
+    </el-col>
+    <el-col :span="6">
+      <div class="grid-content ep-bg-purple" />
+    </el-col>
+    <el-col :span="6">
+      <div class="grid-content ep-bg-purple" />
+    </el-col>
+    <el-col :span="6">
+      <div class="grid-content ep-bg-purple" />
+    </el-col>
   </el-row>
 </template>
 
@@ -100,12 +108,12 @@ const toTopMenu = (item) => {
 }
 
 /* 鼠标悬停效果 */
-.menu-link:hover{
+.menu-link:hover {
   color: #2c83f0;
   background-color: bisque;
 }
 
-.menuActive{
+.menuActive {
   color: rgb(207, 17, 17);
   font-weight: bold;
   background-color: skyblue;
@@ -147,9 +155,9 @@ const toTopMenu = (item) => {
 
 
 
- 
+
 @media (max-width: 768px) {
-  .top-menu{
+  .top-menu {
     position: fixed;
     top: 0;
     left: 0;
