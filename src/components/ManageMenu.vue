@@ -65,6 +65,9 @@
 import { reactive, onMounted, ref, computed } from 'vue'
 import { apiMenuList, apiMenuAdd, apiMenuUpdate, apiMenuDelete } from '../axios/menuAxios';
 import type { DialogTransition, FormInstance, FormRules } from 'element-plus'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 onMounted(() => {
     init()
@@ -174,6 +177,8 @@ const useApiDeleteMenu = async () => {
 
 const processResponse = (resp, notRequiresRefresh) => {
     if (resp.status == 401) {
+        ElMessage.error("认证失败")
+        localStorage.removeItem("huajieyu_blog_auth")
         router.push("/login")
         return
     }
@@ -182,7 +187,7 @@ const processResponse = (resp, notRequiresRefresh) => {
             location.reload()
         }
     } else {
-        alert(resp.data.msg)
+        ElMessage.error(resp.data.msg)
     }
 }
 

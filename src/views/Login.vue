@@ -14,9 +14,6 @@
                     <el-button @click="toSignup">没有账号？去注册</el-button>
                     <el-button @click="login">登录</el-button>
                 </el-form-item>
-                <div style="text-align: center;">
-                    <small v-show="errMsg" style="color: red;">{{ errMsg }}</small>
-                </div>
             </el-form>
         </div>
     </div>
@@ -41,11 +38,16 @@ const errMsg = ref('')
 
 const login = async () => {
     const resp = await apiLogin(form)
-    if (resp.status == 200 && resp.data.code == 200) {
+    if(resp.status != 200){
+        ElMessage.error(resp)
+        return
+    }
+    if (resp.data.code == 200) {
+        ElMessage.success(resp.data.msg)
         localStorage.setItem('huajieyu_blog_auth', resp.data.data)
         toHome()
     } else {
-        errMsg.value = resp.msg
+        ElMessage.error(resp.data.msg)
     }
 }
 

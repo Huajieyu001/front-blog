@@ -29,6 +29,8 @@ watchEffect(() => {
 
 const processResponse = (resp, notRequiresRefresh) => {
   if (resp.status == 401) {
+    ElMessage.error("认证失败")
+    localStorage.removeItem("huajieyu_blog_auth")
     router.push("/login")
     return
   }
@@ -37,7 +39,7 @@ const processResponse = (resp, notRequiresRefresh) => {
       location.reload()
     }
   } else {
-    alert(resp.data.msg)
+    ElMessage.error(resp.data.msg)
   }
 }
 </script>

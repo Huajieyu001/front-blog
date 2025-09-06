@@ -68,11 +68,11 @@ const signup = (formEl: FormInstance | undefined) => {
 
 const signupUseApi = async () => {
     captchaDisabled.value = true
-    const data = await apiSignup(form)
-    if (data.code == 200) {
-        router.push('/')
+    const resp = await apiSignup(form)
+    if (resp.status == 200) {
+        router.push('/login')
     } else {
-        alert(data.msg)
+        alert(resp.data.msg)
     }
 }
 

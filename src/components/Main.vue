@@ -1,19 +1,7 @@
 <template>
-    <!-- <Operation></Operation> -->
     <div style="margin: 20px;">
         筛选 &nbsp;<SelectMenu></SelectMenu>
     </div>
-    <!-- <Summary v-if="article.records && article.records.length > 0"
-            v-for="item in article.records" 
-            :key="item"
-            @click="readArticle(item.id)">
-        <template v-slot:title>
-            <div class="article-list-title">标题：{{ item.title }}</div>
-        </template>
-<template v-slot:summary>
-            概述：{{ item.summary }}
-        </template>
-</Summary> -->
     <ArticleTab v-for="item in article.records" :article="item" :key="item.id"></ArticleTab>
     <div class="record left-distance">共有{{ article.total }}条记录</div>
     <el-pagination :page-size="pageSize" :pager-count="7" layout="prev, pager, next, jumper, ->" :total="article.total"
@@ -45,19 +33,9 @@ onMounted(() => {
     initList(1, 10)
 })
 
-
 const initList = async (pageNum, pageSize, menuId) => {
     const resp = await apiArticleList(menuId, pageNum, pageSize)
     Object.assign(article, { ...resp.data.data })
-}
-
-const readArticle = (id) => {
-    router.push({
-        name: 'ArticleDetail',
-        query: {
-            id: id
-        }
-    })
 }
 
 watchEffect(() => {

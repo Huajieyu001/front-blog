@@ -24,6 +24,11 @@
 </template>
 
 <script setup>
+// import { onMounted } from 'vue';
+
+// onMounted(() => {
+//     location.reload()
+// })
 </script>
 
 <style scoped>

@@ -132,9 +132,11 @@ function publish() {
     // 提交完成后，把编辑页的信息清空
     clearArticleStore()
     dialogVisible.value = false
-    router.push({
-        path: '/'
-    })
+    setTimeout(()=>{
+        router.push({
+            path: '/'
+        })
+    }, 500)
 }
 
 watchEffect(() => {
@@ -154,6 +156,9 @@ onMounted(() => {
     if (!ossStore.isActive) {
         initOssStore()
     }
+
+    // 初始化菜单id
+    articleStore.menuId = menuStore.currentMenuId
 
     editor.value = new Vditor('vditor', {
         cdn: `${location.origin}${import.meta.env.BASE_URL}vditor`,
@@ -228,6 +233,8 @@ const initArticle = async (id) => {
 
 const processResponse = (resp, notRequiresRefresh) => {
     if (resp.status == 401) {
+        ElMessage.error("认证失败")
+        localStorage.removeItem("huajieyu_blog_auth")
         router.push("/login")
         return
     }
